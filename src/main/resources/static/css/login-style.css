@@ -1,0 +1,173 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins&display=swap');
+
+*
+{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Poppins', sans-serif;
+}
+
+body
+{
+    min-height: 100vh;
+    width: 100%;
+    background-color: #f2f3f5;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 100px
+}
+
+.signup 
+{
+    padding: 90px 75px;
+    background-color: #fff;
+    width: 100%;
+    max-width: 600px;
+    border-radius: 20px;
+}
+
+.signup-heading
+{
+    font-size: 40px;
+    font-weight: bold;
+    color: #373941;
+    text-align: center;
+    margin-bottom: 35px;
+}
+
+.signup-social
+{
+    padding: 10px;
+    border-radius: 20px;
+    display: block;
+    width: 100%;
+    color: #fff;
+    font-size: 16px;
+    font-weight: bold;
+    border: 0;
+    background-color: #4c6ff4;
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    outline: none;
+    box-shadow: 0 5px 10px 0 rgba(76, 111, 244, 0.5);
+    margin-bottom: 30px;
+}
+
+.signup-social-icon
+{
+    width: 60px;
+    height: 60px;
+    border-radius: 10px;
+    background-color: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #4c6ff4;
+    font-size: 35px;
+}
+
+.signup-social-text
+{
+    display: block;
+    margin: 0 auto;
+}
+
+.signup-or  
+{
+    text-align: center;
+    font-style: 20px;
+    color: #999;
+    margin: 55px;
+    position: relative;
+}
+
+.signup-or span
+{
+    display: inline-block;
+    padding: 10px 30px;
+    background-color: #fff;
+    position: relative;
+    z-index: 1;
+}
+
+.signup-or:after
+{
+    content: "";
+    width: 100%;
+    height: 1px;
+    background-color: #999;
+    position: absolute;
+    top: 50%;
+    left: 0;
+    transform: translatey(-50%);
+}
+
+.signup-label
+{
+    font-size: 16px;
+    color: #373941;
+    margin-bottom: 10px;
+    display: inline-block;
+    cursor: pointer;
+}
+.signup-input
+{
+    display: block;
+    width: 100%;
+    padding: 25px;
+    border-radius: 20px;
+    background-color: #f2f3f5;
+    outline: none;
+    border: 0;
+    font-size: 18px;
+    margin-bottom: 30px;
+    color: rgb(145, 142, 142)
+}
+
+.signup-submit
+{
+    padding: 25px;
+    font-size: 20px;
+    text-align: center;
+    border: 0;
+    outline: none;
+    display: inline-block;
+    width: 100%;
+    color: #fff;
+    border-radius: 20px;
+    background-color: rgb(130, 201, 30);
+    box-shadow: 0 5px 10px 0 rgba(130, 201, 30, 0.5);
+    margin-top: 25px;
+    cursor: pointer;
+}
+
+.signup-already
+{
+    text-align: center;
+    font-size: 18px;
+    color: #999;
+    margin-top: 10px;
+}
+
+.signup-login   
+{
+    color: #2979ff;
+}
+
+.password-container
+{
+    position: relative;
+}
+
+.password-container label i
+{
+    position: absolute;
+    top: 30px;
+    right: 10px;
+    text-align: center;
+    cursor: pointer;
+    color: #d3d3d3;
+}

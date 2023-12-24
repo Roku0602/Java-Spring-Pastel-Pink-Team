@@ -1,0 +1,55 @@
+
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/html">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" th:href="@{/css/login-style.css}">
+    <link rel="stylesheet" href="https://unicons.iconscout.com/release/v4.0.0/css/line.css">
+    <link rel="stylesheet" th:href="@{/static/fonts/fontawesome-free-6.2.1-web/fontawesome-free-6.2.1-web/css/all.css}">
+    <title>Đăng nhập</title>
+</head>
+<body>
+    <div class = "signup" id="wrapper">
+        <button class = "signup-social">
+            <i class = "uil uil-google signup-social-icon"></i>
+            <span class = "signup-social-text">Login with Google</span>
+        </button>
+        <button class = "signup-social">
+            <i class="uil uil-facebook-f signup-social-icon"></i>
+            <span class = "signup-social-text">Login with facebook</span>
+        </button>
+        
+        <div class = "signup-or"><span>OR</span></div>
+        <form id="form-login" th:action="@{/login}" class="bg-light p-4 my-3" method="post">
+            <h1 class="signup-heading">Đăng nhập</h1>
+            <!--<div th:if='${session.getAttribute("errorLog") != null}'>
+                <p class="text-danger" >Tài khoản hoặc mật khẩu không chính xác</p>
+            </div>-->
+            <div class="form-group">
+                <i class="fa-solid fa-user"></i>
+                <label for="username"  class="signup-label">Tài khoản</label>
+                <input type="text" name="username" class="signup-input" placeholder = "Tên tài khoản" id = "username">   
+            </div>
+            <div class="form-group">
+                <i class="fa-solid fa-lock"></i>
+                <label for="password" id = "password" class="signup-label">Mật khẩu</label>
+                <div class="password-container">
+                    <label>
+                        <input type="password" name="password" class="signup-input" id="myInput" placeholder = "Mật khẩu">
+                        <i class="fa-solid fa-eye" id="eye" onclick="myFunction()"></i>
+                    </label>
+                </div>
+            </div>      
+                <button class="signup-submit" name="btn-reglog">Đăng nhập</button>
+                <p class="signup-already">
+                    <span>Chưa có tài khoản</span>
+                    <a th:href = "@{/signup}" class = "signup-login">Đăng ký</a>
+                </p>
+        </form>
+
+    </div>
+</body>
+
+</html>
