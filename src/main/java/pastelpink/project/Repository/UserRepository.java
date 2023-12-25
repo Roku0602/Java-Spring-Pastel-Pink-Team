@@ -9,4 +9,6 @@ import pastelpink.project.Entity.User;
 
 @Repository
 public interface UserRepository extends JpaRepository<User, Integer> {
+    @Query("SELECT u FROM User u WHERE u.Email = :username AND u.password = :password")
+    public User getUserByEmail(@Param("username") String username,@Param("password") String mk);
 }

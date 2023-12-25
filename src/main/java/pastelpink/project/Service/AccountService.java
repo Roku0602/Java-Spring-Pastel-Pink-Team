@@ -20,7 +20,7 @@ public class AccountService {
     {
         BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
         String md5Hash = DigestUtils.md5Hex(pass.trim());
-        User checkLoginUser = userRepository.findAll().stream().filter(q->q.getEmail().toString().equals(username.trim()) && q.getPassword().toString().equals(md5Hash)).findFirst().orElse(null);
+        User checkLoginUser = userRepository.getUserByEmail(username, md5Hash);
         if(checkLoginUser == null)
         {
             return 0;
