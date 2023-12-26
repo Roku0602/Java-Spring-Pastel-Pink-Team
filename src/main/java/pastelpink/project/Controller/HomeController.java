@@ -10,6 +10,6 @@ public class HomeController {
     @GetMapping("/start")
     public String ChessBoard()
     {
-        return "Home/index.html";
+        return "ChessBoard/index.html";
     }
 }
