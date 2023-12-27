@@ -6,6 +6,7 @@ public class ChessMoveNodeModel {
     private int endi;
     private int startj;
     private int endj;
+    private String player;
 
     public String getId() {
         return this.id;
@@ -45,6 +46,14 @@ public class ChessMoveNodeModel {
 
     public void setEndj(int endj) {
         this.endj = endj;
+    }
+
+    public String getPlayer() {
+        return this.player;
+    }
+
+    public void setPlayer(String player) {
+        this.player = player;
     }
 
 }

@@ -45,13 +45,15 @@ public class AccountController {
                 session.removeAttribute("errorLog");
             }
             session.setAttribute("user", tk);
+            //Test và sẽ chuyển qua code tạo và join phòng
+            //session.setAttribute("team", "do");
         }
         else
         {
             session.setAttribute("errorLog", "Tài khoản hoặc mật khẩu không chính xác!");
             return "redirect:/login";
         }
-        return "";
+         return "redirect:/play/start";
     }
 
     @GetMapping("/logout")

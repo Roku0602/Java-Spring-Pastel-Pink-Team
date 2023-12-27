@@ -20,5 +20,11 @@ public class WebSocketController {
     public String chessMove(String moveNode) {
         return moveNode;
     }
+
+    @MessageMapping("/team")
+    @SendTo("/topic/team")
+    public String teamPlay(String message) {
+        return message;
+    }
 }
 

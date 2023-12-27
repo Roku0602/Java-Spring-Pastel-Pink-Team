@@ -16,8 +16,12 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
+import jakarta.servlet.http.HttpSession;
+import net.minidev.json.JSONArray;
+import net.minidev.json.JSONObject;
 import pastelpink.project.Model.ApiResponse;
 import pastelpink.project.Model.ChessMoveNodeModel;
 import pastelpink.project.Model.ChessNode;
@@ -82,11 +86,34 @@ public class ChessBoardController {
     }
 
     @PostMapping("/set-move-chess")
-    public ResponseEntity<Object> moveChessNode(@RequestBody List<ChessMoveNodeModel> moveList) {
+    public ResponseEntity<Object> moveChessNode(@RequestBody List<ChessMoveNodeModel> moveList,HttpSession session) {
         System.out.println("ok");
+       
         try {
             String moveListStr = new com.fasterxml.jackson.databind.ObjectMapper().writeValueAsString(moveList);
             System.out.println("di chuyen: "+moveListStr);
+            // Tạo một đối tượng ObjectMapper từ Jackson
+            ObjectMapper objectMapper = new ObjectMapper();
+
+            // Chuyển đổi chuỗi JSON thành đối tượng JsonNode
+            JsonNode jsonNode = objectMapper.readTree(moveListStr);
+
+            // Lấy giá trị của trường "player" từ đối tượng JsonNode
+            String playerValue = jsonNode.get(0).get("player").asText();
+            System.out.println("Chuoi cat duoc: "+playerValue);
+
+            //session được tạo ngay sau khi join phòng
+            if(session.getAttribute("team") != null)
+            {
+                if(session.getAttribute("team").toString().equals(playerValue))
+                {
+                    
+                }
+                else
+                {
+                    return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(new ApiResponse(false, "Không phải turn của bạn", null, null));
+                }
+            }
             // Gọi hàm gửi thông điệp tới client ở đây (sử dụng WebSocket hoặc một cơ chế gửi thông điệp phù hợp)
             messagingTemplate.convertAndSend("/topic/chessMove", moveListStr);
 

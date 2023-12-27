@@ -41,13 +41,9 @@
 </body>
 </html>
 <script th:inline="javascript">
-    var a = 1;
-        if(a == 1) {
-        console.log('true');
-        } else {
-        console.log('false');
-        }
+   
     var matrix = [];
+    var currentPlayer;
     var app = new Vue({
         el: "#app",
         data: {
@@ -65,6 +61,7 @@
                 }).then((response) =>  {
                     this.chessNode = response.data.chessNodeList;
                     this.matrix = response.data.matrix; // Gán dữ liệu ma trận từ API
+                    this.currentPlayer = "do";
                     console.log(this.matrix);
                     console.log(this.chessNode);
                 }).catch((error) => {
@@ -106,49 +103,117 @@
                 if (objEnd == null){
                    return;
                 }
+                console.log("Player now is "+this.currentPlayer);
                 
-               
-                if (event.currentTarget.id.indexOf("ma") >=0 && (Math.abs(objStart.i - objEnd.i) == 1 && Math.abs(objStart.j - objEnd.j) == 2) ||
-                    (Math.abs(objStart.i - objEnd.i) == 2 && Math.abs(objStart.j - objEnd.j) == 1)){
-                    
-                    
-                    if (Math.abs(objStart.i - objEnd.i) == 2){
-                        if (objEnd.i > objStart.i  && this.matrix[objStart.i + 1][objStart.j].id != " " )
-                        {
-                            return;
-                        }
-                        if (objEnd.i < objStart.i && this.matrix[objStart.i - 1][objStart.j].id != " " )
-                        {
-                            return;
-                        }
-                    }
-                    if (Math.abs(objStart.j - objEnd.j) == 2) {
-                        if (objEnd.j > objStart.j && this.matrix[objStart.i][objStart.j + 1].id != " "  )
-                        {
-                            return;
-                        }
-                        if (objEnd.j < objStart.j && this.matrix[objStart.i][objStart.j - 1].id != " " )
-                        {
-                            return;
-                        }
-                    }
-                    var temp = "do";
-                    if(event.currentTarget.id.indexOf(temp) < 0)
+                if (this.currentPlayer === "do") {
+                    if(event.currentTarget.id.indexOf("do") >= 0)
                     {
-                        temp= "den";
+                        if (event.currentTarget.id.indexOf("ma") >=0 && (Math.abs(objStart.i - objEnd.i) == 1 && Math.abs(objStart.j - objEnd.j) == 2) ||
+                            (Math.abs(objStart.i - objEnd.i) == 2 && Math.abs(objStart.j - objEnd.j) == 1)){
+                            
+                            
+                            if (Math.abs(objStart.i - objEnd.i) == 2){
+                                if (objEnd.i > objStart.i  && this.matrix[objStart.i + 1][objStart.j].id != " " )
+                                {
+                                    
+                                    return;
+                                }
+                                if (objEnd.i < objStart.i && this.matrix[objStart.i - 1][objStart.j].id != " " )
+                                {
+                                    
+                                    return;
+                                }
+                            }
+                            if (Math.abs(objStart.j - objEnd.j) == 2) {
+                                if (objEnd.j > objStart.j && this.matrix[objStart.i][objStart.j + 1].id != " "  )
+                                {
+                                    
+                                    return;
+                                }
+                                if (objEnd.j < objStart.j && this.matrix[objStart.i][objStart.j - 1].id != " " )
+                                {
+                                    
+                                    return;
+                                }
+                            }
+                            var tempchess = "do";
+                            if(event.currentTarget.id.indexOf(tempchess) < 0)
+                            {
+                                tempchess= "den";
+                            }
+                            if (this.matrix[objEnd.i][objEnd.j].id != " " && this.matrix[objEnd.i][objEnd.j].id.indexOf(tempchess) >0)
+                            {
+                                return;
+                            }
+                            
+                        }
+                        else
+                        {
+                            return;
+                        }
                     }
-                    if (this.matrix[objEnd.i][objEnd.j].id != " " && this.matrix[objEnd.i][objEnd.j].id.indexOf(temp) >0)
+                    else
                     {
                         return;
                     }
                     
                 }
-                else if(event.currentTarget.id.indexOf("ma") >=0 && (Math.abs(objStart.i - objEnd.i) != 1 && Math.abs(objStart.j - objEnd.j) != 2) ||
-                (Math.abs(objStart.i - objEnd.i) != 2 && Math.abs(objStart.j - objEnd.j) != 1))
+                else if(this.currentPlayer === "den") 
                 {
-                    return;
+                    if(event.currentTarget.id.indexOf("den") >= 0)
+                    {
+                        if (event.currentTarget.id.indexOf("ma") >=0 && (Math.abs(objStart.i - objEnd.i) == 1 && Math.abs(objStart.j - objEnd.j) == 2) ||
+                            (Math.abs(objStart.i - objEnd.i) == 2 && Math.abs(objStart.j - objEnd.j) == 1)){
+                            
+                            if (Math.abs(objStart.i - objEnd.i) == 2){
+                                if (objEnd.i > objStart.i  && this.matrix[objStart.i + 1][objStart.j].id != " " )
+                                {
+                                    
+                                    return;
+                                }
+                                if (objEnd.i < objStart.i && this.matrix[objStart.i - 1][objStart.j].id != " " )
+                                {
+                                    
+                                    return;
+                                }
+                            }
+                            if (Math.abs(objStart.j - objEnd.j) == 2) {
+                                if (objEnd.j > objStart.j && this.matrix[objStart.i][objStart.j + 1].id != " "  )
+                                {
+                                    
+                                    return;
+                                }
+                                if (objEnd.j < objStart.j && this.matrix[objStart.i][objStart.j - 1].id != " " )
+                                {
+                                    
+                                    return;
+                                }
+                            }
+                            var temp = "do";
+                            if(event.currentTarget.id.indexOf(temp) < 0)
+                            {
+                                temp= "den";
+                            }
+                            if (this.matrix[objEnd.i][objEnd.j].id != " " && this.matrix[objEnd.i][objEnd.j].id.indexOf(temp) >0)
+                            {
+                                return;
+                            }
+                            
+                        }
+                        else
+                        {
+                            return;
+                        }
+                    }
+                    else
+                    {
+                        return;
+                    }
                 }
-               
+                else {
+                    // It's not the current player's turn, handle accordingly
+                    console.log("It's not your turn!");
+                }
                 
                
                 var objPara = {};
@@ -157,6 +222,14 @@
                 objPara.startj = objStart.j;
                 objPara.endi = objEnd.i;
                 objPara.endj = objEnd.j;
+                if(event.currentTarget.id.indexOf("do") >= 0)
+                {
+                    objPara.player = "do";
+                }
+                else if( event.currentTarget.id.indexOf("den") >= 0)
+                {
+                    objPara.player = "den";
+                }
                 var objParaList = [];
                 objParaList.push(objPara);
                 if (this.matrix[objEnd.i][objEnd.j].id != " ") {
@@ -166,6 +239,7 @@
                     objParaList.push(objRemove);
                 }
                             
+                //Lưu di chuyển
                 axios.post('/api/set-move-chess',
                     JSON.stringify(objParaList),
                     {
@@ -189,14 +263,16 @@
             }
             
         },
-        // Thay thế mã nguồn SignalR
+        // Thay thế mã nguồn SignalR bên .net thực hiện websocket
         mounted: function () {
             var self = this;
+            //var currentPlayer = 'do';
             this.getChessNode();
             // Tạo kết nối SockJS và Stomp
             var socket = new SockJS('http://localhost:8080/websocket');
             var stompClient = Stomp.over(socket);
-        
+            
+            
             stompClient.connect({}, function (frame) {
                 console.log('WebSocket connection opened.');
                 // Đăng ký để lắng nghe tin nhắn từ topic "/topic/chessMove"
@@ -216,7 +292,10 @@
                         if (objList.length == 2) {
                             document.getElementById(objList[1].id).style.display = "none";
                         }
-                    
+                        self.currentPlayer = objList[0].player;
+                        self.currentPlayer = (self.currentPlayer === 'do') ? 'den' : 'do';
+                        console.log("Player change to "+self.currentPlayer)
+                        
                 });
             });
         
