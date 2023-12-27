@@ -78,7 +78,7 @@ public class ChessBoardController {
                 }
                 matrix.add(points);
             }
-            return ResponseEntity.ok().body(new ApiResponse(true, "", matrix, chessNodeList));
+            return ResponseEntity.ok().body(new ApiResponse(true, " ", matrix, chessNodeList));
         } catch (IOException e) {
             e.printStackTrace();
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(new ApiResponse(false, "Lỗi: "+ e.getMessage(), null, null));

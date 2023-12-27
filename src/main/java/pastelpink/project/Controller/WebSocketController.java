@@ -21,10 +21,6 @@ public class WebSocketController {
         return moveNode;
     }
 
-    @MessageMapping("/team")
-    @SendTo("/topic/team")
-    public String teamPlay(String message) {
-        return message;
-    }
+    
 }
 
