@@ -503,13 +503,15 @@
                     console.log("It's not your turn!");
                 }
                 
-               
+                var room = window.location.pathname.split('/').pop();
+                console.log("Phòng"+room);
                 var objPara = {};
                 objPara.id = event.currentTarget.id;
                 objPara.starti = objStart.i;
                 objPara.startj = objStart.j;
                 objPara.endi = objEnd.i;
                 objPara.endj = objEnd.j;
+                objPara.rooms = room;
                 if(event.currentTarget.id.indexOf("do") >= 0)
                 {
                     objPara.player = "do";
@@ -565,11 +567,11 @@
             var socket = new SockJS('http://localhost:8080/websocket');
             var stompClient = Stomp.over(socket);
             
-            
+            var room = window.location.pathname.split('/').pop();
             stompClient.connect({}, function (frame) {
                 console.log('WebSocket connection opened.');
                 // Đăng ký để lắng nghe tin nhắn từ topic "/topic/chessMove"
-                stompClient.subscribe('/topic/chessMove', function (message) {
+                stompClient.subscribe('/topic/chessMove/'+room, function (message) {
                     var objList = JSON.parse(message.body);
                     console.log(objList);
                    

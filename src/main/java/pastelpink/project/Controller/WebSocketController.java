@@ -15,8 +15,8 @@ public class WebSocketController {
         return message;
     }
 
-    @MessageMapping("/chessMove")
-    @SendTo("/topic/chessMove")
+    @MessageMapping("/chessMove/{idRoom}")
+    @SendTo("/topic/chessMove/{idRoom}")
     public String chessMove(String moveNode) {
         return moveNode;
     }

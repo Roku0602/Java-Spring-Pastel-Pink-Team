@@ -100,8 +100,11 @@ public class ChessBoardController {
 
             // Lấy giá trị của trường "player" từ đối tượng JsonNode
             String playerValue = jsonNode.get(0).get("player").asText();
-            System.out.println("Chuoi cat duoc: "+playerValue);
+            System.out.println("thong tin cat duoc: "+playerValue);
 
+            String roomValue = jsonNode.get(0).get("rooms").asText();
+            
+            System.out.println("Phong: "+roomValue);
             //session được tạo ngay sau khi join phòng
             if(session.getAttribute("team") != null)
             {
@@ -115,7 +118,7 @@ public class ChessBoardController {
                 }
             }
             // Gọi hàm gửi thông điệp tới client ở đây (sử dụng WebSocket hoặc một cơ chế gửi thông điệp phù hợp)
-            messagingTemplate.convertAndSend("/topic/chessMove", moveListStr);
+            messagingTemplate.convertAndSend("/topic/chessMove/"+roomValue, moveListStr);
 
             // Trả về kết quả
             return ResponseEntity.ok().body(new ApiResponse(true, "",null,null));
