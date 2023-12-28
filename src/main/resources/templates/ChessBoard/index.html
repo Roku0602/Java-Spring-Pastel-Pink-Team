@@ -168,7 +168,7 @@
                             {
                                 tempchess= "den";
                             }
-                            if(objStart.i == 0)
+                            if( objEnd.i <= 2 && objEnd.j > 2 && objEnd.j < 6)
                             {
                                 
                                 if((Math.abs(objStart.i - objEnd.i) == 1 && Math.abs(objStart.j - objEnd.j) == 0) ||
@@ -218,84 +218,30 @@
                                 {
                                     return;
                                 }
+                                //Cấm đi chéo
                                 else if((Math.abs(objStart.i - objEnd.i) == 1 && Math.abs(objStart.j - objEnd.j) != 0) ||
                                 (Math.abs(objStart.i - objEnd.i) != 0 && Math.abs(objStart.j - objEnd.j) == 1))
                                 {
                                     return;
                                 }
-                            }
-                            
-                            if(objStart.i > 0)
-                            {
-
-                                if( objEnd.i <= 2 && objEnd.j > 2 && objEnd.j < 6)
-                                {
-                                    //Với 3 ô có tọa độ (x,y) là (3,1) , (5,1) , (4,2) cấm di chuyển chéo
-                                    if((objStart.i == 1 && objStart.j == 3) || (objStart.i == 1 && objStart.j == 5) ||
-                                    (objStart.i == 2 && objStart.j == 4) )
-                                    {
-                                        if((Math.abs(objStart.i - objEnd.i) == 1 && Math.abs(objStart.j - objEnd.j) != 0) )
-                                        {
-                                            return;
-                                        }
-                                    }
-                                    if((Math.abs(objStart.i - objEnd.i) == 1 && Math.abs(objStart.j - objEnd.j) == 0) || 
-                                    (Math.abs(objStart.i - objEnd.i) == 1 && Math.abs(objStart.j - objEnd.j) != 0) ||
-                                    (Math.abs(objStart.i - objEnd.i) == 0 && Math.abs(objStart.j - objEnd.j) == 1) ||
-                                    (Math.abs(objStart.i - objEnd.i) != 0 && Math.abs(objStart.j - objEnd.j) == 1)
-                                    )
-                                    {
-                                    
-                                            console.log("tuongngu2");
-                                        
-                                            if (Math.abs(objStart.i - objEnd.i) == 1){
-                                                if (objEnd.i > objStart.i  && this.matrix[objStart.i + 1][objStart.j].id != " " &&
-                                                this.matrix[objStart.i + 1][objStart.j].id.indexOf(tempchess) > 0 )
-                                                {
-                                                    return;
-                                                }
-                                                if (objEnd.i < objStart.i && this.matrix[objStart.i - 1][objStart.j].id != " " &&
-                                                this.matrix[objStart.i - 1][objStart.j].id.indexOf(tempchess) > 0 )
-                                                {
-                                                    
-                                                    return;
-                                                }
-                                            }
-                                            if(Math.abs(objStart.j - objEnd.j) == 1) 
-                                            {
-                                               
-                                                if (objEnd.j > objStart.j && this.matrix[objStart.i][objStart.j + 1].id != " "  &&
-                                                this.matrix[objStart.i][objStart.j + 1].id.indexOf(tempchess) > 0 )
-                                                {
-                                                    return;
-                                                }
-                                                if (objEnd.j < objStart.j && this.matrix[objStart.i][objStart.j - 1].id != " " &&
-                                                this.matrix[objStart.i][objStart.j - 1].id.indexOf(tempchess) > 0 )
-                                                {
-                                                    return;
-                                                }
-                                                
-                                            }
-                                      
-                                    }
-                                    else if((Math.abs(objStart.i - objEnd.i) != 1 && Math.abs(objStart.j - objEnd.j) == 0) ||
-                                    (Math.abs(objStart.i - objEnd.i) == 0 && Math.abs(objStart.j - objEnd.j) != 1))
-                                    {
-                                        return;
-                                    }
-                                    
-                                }
-                                else
+                                if((Math.abs(objStart.i - objEnd.i) != 1 && Math.abs(objStart.j - objEnd.j) == 0) ||
+                                (Math.abs(objStart.i - objEnd.i) == 0 && Math.abs(objStart.j - objEnd.j) != 1))
                                 {
                                     return;
-                                }    
+                                }
+                            }
+                            else
+                            {
+                                return;
                             }
                             
                             if (this.matrix[objEnd.i][objEnd.j].id != " " && this.matrix[objEnd.i][objEnd.j].id.indexOf(tempchess) >0)
                             {
                                 return;
                             }
+                                    
                         }
+                        
 
                         //Quân xe
                         if (event.currentTarget.id.indexOf("xe") >=0 )
@@ -418,8 +364,14 @@
                         //Quân tướng
                         if (event.currentTarget.id.indexOf("chutuong") >=0 )
                         {
+                            var tempchess = "do";
+                            if(event.currentTarget.id.indexOf(tempchess) < 0)
+                            {
+                                tempchess= "den";
+                            }
+                            
                             console.log(objStart.i);
-                            if(objStart.i == 9)
+                            if( objEnd.i <= 9 && objEnd.i > 6 &&  objEnd.j > 2 && objEnd.j <6)
                             {
                                 
                                 if((Math.abs(objStart.i - objEnd.i) == 1 && Math.abs(objStart.j - objEnd.j) == 0) ||
@@ -427,7 +379,7 @@
                                 {
                                         console.log("KetQua:"+Math.abs(objStart.j - objEnd.j));
                                         if (Math.abs(objStart.i - objEnd.i) == 1){
-                                           
+                                        
                                             if (objEnd.i > objStart.i  && this.matrix[objStart.i + 1][objStart.j].id != " " &&
                                             this.matrix[objStart.i + 1][objStart.j].id.indexOf(tempchess) > 0 )
                                             {
@@ -463,101 +415,29 @@
                                     
                                     
 
-                                    
                                 }
                                 else if((Math.abs(objStart.i - objEnd.i) != 1 && Math.abs(objStart.j - objEnd.j) == 0) ||
                                 (Math.abs(objStart.i - objEnd.i) == 0 && Math.abs(objStart.j - objEnd.j) != 1))
                                 {
                                     return;
                                 }
+                                //Cấm đi chéo
                                 else if((Math.abs(objStart.i - objEnd.i) == 1 && Math.abs(objStart.j - objEnd.j) != 0) ||
                                 (Math.abs(objStart.i - objEnd.i) != 0 && Math.abs(objStart.j - objEnd.j) == 1))
                                 {
                                     return;
                                 }
-                            }
-                            
-                            if(objStart.i < 9)
-                            {
-                                if( objEnd.i <= 9 && objEnd.i > 6 &&  objEnd.j > 2 && objEnd.j <6)
-                                {
-                                     //Với 3 ô có tọa độ (x,y) là (3,1) , (5,1) , (4,2) cấm di chuyển chéo
-                                     if((objStart.i == 8 && objStart.j == 3) || (objStart.i == 8 && objStart.j == 5) ||
-                                     (objStart.i == 7 && objStart.j == 4) )
-                                     {
-                                         if((Math.abs(objStart.i - objEnd.i) == 1 && Math.abs(objStart.j - objEnd.j) != 0) )
-                                         {
-                                             return;
-                                         }
-                                     }
-                                    if((Math.abs(objStart.i - objEnd.i) == 1 && Math.abs(objStart.j - objEnd.j) == 0) || 
-                                    (Math.abs(objStart.i - objEnd.i) == 1 && Math.abs(objStart.j - objEnd.j) != 0) ||
-                                    (Math.abs(objStart.i - objEnd.i) == 0 && Math.abs(objStart.j - objEnd.j) == 1) ||
-                                    (Math.abs(objStart.i - objEnd.i) != 0 && Math.abs(objStart.j - objEnd.j) == 1)
-                                    )
-                                    {
-                                    
-                                            console.log("tuongngu2");
-                                        
-                                            if (Math.abs(objStart.i - objEnd.i) == 1){
-                                                if (objEnd.i > objStart.i  && this.matrix[objStart.i + 1][objStart.j].id != " " &&
-                                                this.matrix[objStart.i + 1][objStart.j].id.indexOf(tempchess) > 0 )
-                                                {
-                                                    return;
-                                                }
-                                                if (objEnd.i < objStart.i && this.matrix[objStart.i - 1][objStart.j].id != " " &&
-                                                this.matrix[objStart.i - 1][objStart.j].id.indexOf(tempchess) > 0 )
-                                                {
-                                                    
-                                                    return;
-                                                }
-                                            }
-                                            if(Math.abs(objStart.j - objEnd.j) == 1) 
-                                            {
-                                               
-                                                if (objEnd.j > objStart.j && this.matrix[objStart.i][objStart.j + 1].id != " "  &&
-                                                this.matrix[objStart.i][objStart.j + 1].id.indexOf(tempchess) > 0 )
-                                                {
-                                                    return;
-                                                }
-                                                if (objEnd.j < objStart.j && this.matrix[objStart.i][objStart.j - 1].id != " " &&
-                                                this.matrix[objStart.i][objStart.j - 1].id.indexOf(tempchess) > 0 )
-                                                {
-                                                    return;
-                                                }
-                                                
-                                            }
-                                        
-                                    }
-                                    else if((Math.abs(objStart.i - objEnd.i) != 1 && Math.abs(objStart.j - objEnd.j) == 0) ||
-                                    (Math.abs(objStart.i - objEnd.i) == 0 && Math.abs(objStart.j - objEnd.j) != 1))
-                                    {
-                                        console.log("fail");
-                                        return;
-                                    }
-                                }
-                                else
+                                if((Math.abs(objStart.i - objEnd.i) != 1 && Math.abs(objStart.j - objEnd.j) == 0) ||
+                                (Math.abs(objStart.i - objEnd.i) == 0 && Math.abs(objStart.j - objEnd.j) != 1))
                                 {
                                     return;
-                                }    
-                            }
-                            var tempchess = "do";
-                            if(event.currentTarget.id.indexOf(tempchess) < 0)
-                            {
-                                tempchess= "den";
+                                }
                             }
                             if (this.matrix[objEnd.i][objEnd.j].id != " " && this.matrix[objEnd.i][objEnd.j].id.indexOf(tempchess) >0)
                             {
                                 return;
                             }
                         }
-
-
-
-
-
-
-
                     }
                     else
                     {
