@@ -46,14 +46,17 @@ public class AccountController {
             }
             session.setAttribute("user", tk);
             //Test và sẽ chuyển qua code tạo và join phòng
-            //session.setAttribute("team", "do");
+            if(tk.trim().equals("admin01@gmail.com"))
+                session.setAttribute("team", "do");
+            else
+                session.setAttribute("team", "den");
         }
         else
         {
             session.setAttribute("errorLog", "Tài khoản hoặc mật khẩu không chính xác!");
             return "redirect:/login";
         }
-         return "redirect:/play/start";
+         return "redirect:/play/start/1";
     }
 
     @GetMapping("/logout")

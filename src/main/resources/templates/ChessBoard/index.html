@@ -115,11 +115,13 @@
                             {
                                 
                                 if (Math.abs(objStart.i - objEnd.i) == 2){
+                                    //Xung quanh tiến lên không bị chặn
                                     if (objEnd.i > objStart.i  && this.matrix[objStart.i + 1][objStart.j].id != " " )
                                     {
                                         
                                         return;
                                     }
+                                    //Xung quanh lui về không bị chặn
                                     if (objEnd.i < objStart.i && this.matrix[objStart.i - 1][objStart.j].id != " " )
                                     {
                                         
@@ -127,6 +129,7 @@
                                     }
                                 }
                                 if (Math.abs(objStart.j - objEnd.j) == 2) {
+                                    //Xung quanh ngang không bị chặn
                                     if (objEnd.j > objStart.j && this.matrix[objStart.i][objStart.j + 1].id != " "  )
                                     {
                                         
@@ -160,7 +163,11 @@
                         //Quân tướng
                         if (event.currentTarget.id.indexOf("chutuong") >=0 )
                         {
-                            console.log(objStart.i);
+                            var tempchess = "do";
+                            if(event.currentTarget.id.indexOf(tempchess) < 0)
+                            {
+                                tempchess= "den";
+                            }
                             if(objStart.i == 0)
                             {
                                 
@@ -170,12 +177,14 @@
                                         console.log("KetQua:"+Math.abs(objStart.j - objEnd.j));
                                         if (Math.abs(objStart.i - objEnd.i) == 1){
                                            
-                                            if (objEnd.i > objStart.i  && this.matrix[objStart.i + 1][objStart.j].id != " " )
+                                            if (objEnd.i > objStart.i  && this.matrix[objStart.i + 1][objStart.j].id != " " &&
+                                            this.matrix[objStart.i + 1][objStart.j].id.indexOf(tempchess) > 0 )
                                             {
                                                 
                                                 return;
                                             }
-                                            if (objEnd.i < objStart.i && this.matrix[objStart.i - 1][objStart.j].id != " " )
+                                            if (objEnd.i < objStart.i && this.matrix[objStart.i - 1][objStart.j].id != " " &&
+                                            this.matrix[objStart.i - 1][objStart.j].id.indexOf(tempchess) > 0 )
                                             {
                                                 
                                                 return;
@@ -185,12 +194,14 @@
                                         if(Math.abs(objStart.j - objEnd.j) == 1) 
                                         {
                                         
-                                            if (objEnd.j > objStart.j && this.matrix[objStart.i][objStart.j + 1].id != " "  )
+                                            if (objEnd.j > objStart.j && this.matrix[objStart.i][objStart.j + 1].id != " "  &&
+                                            this.matrix[objStart.i][objStart.j + 1].id.indexOf(tempchess) > 0 )
                                             {
                                             
                                                 return;
                                             }
-                                            if (objEnd.j < objStart.j && this.matrix[objStart.i][objStart.j - 1].id != " " )
+                                            if (objEnd.j < objStart.j && this.matrix[objStart.i][objStart.j - 1].id != " " &&
+                                            this.matrix[objStart.i][objStart.j - 1].id.indexOf(tempchess) > 0 )
                                             {
                                                 
                                                 return;
@@ -216,6 +227,7 @@
                             
                             if(objStart.i > 0)
                             {
+
                                 if( objEnd.i <= 2 && objEnd.j > 2 && objEnd.j < 6)
                                 {
                                     //Với 3 ô có tọa độ (x,y) là (3,1) , (5,1) , (4,2) cấm di chuyển chéo
@@ -237,11 +249,13 @@
                                             console.log("tuongngu2");
                                         
                                             if (Math.abs(objStart.i - objEnd.i) == 1){
-                                                if (objEnd.i > objStart.i  && this.matrix[objStart.i + 1][objStart.j].id != " " )
+                                                if (objEnd.i > objStart.i  && this.matrix[objStart.i + 1][objStart.j].id != " " &&
+                                                this.matrix[objStart.i + 1][objStart.j].id.indexOf(tempchess) > 0 )
                                                 {
                                                     return;
                                                 }
-                                                if (objEnd.i < objStart.i && this.matrix[objStart.i - 1][objStart.j].id != " " )
+                                                if (objEnd.i < objStart.i && this.matrix[objStart.i - 1][objStart.j].id != " " &&
+                                                this.matrix[objStart.i - 1][objStart.j].id.indexOf(tempchess) > 0 )
                                                 {
                                                     
                                                     return;
@@ -250,11 +264,13 @@
                                             if(Math.abs(objStart.j - objEnd.j) == 1) 
                                             {
                                                
-                                                if (objEnd.j > objStart.j && this.matrix[objStart.i][objStart.j + 1].id != " "  )
+                                                if (objEnd.j > objStart.j && this.matrix[objStart.i][objStart.j + 1].id != " "  &&
+                                                this.matrix[objStart.i][objStart.j + 1].id.indexOf(tempchess) > 0 )
                                                 {
                                                     return;
                                                 }
-                                                if (objEnd.j < objStart.j && this.matrix[objStart.i][objStart.j - 1].id != " " )
+                                                if (objEnd.j < objStart.j && this.matrix[objStart.i][objStart.j - 1].id != " " &&
+                                                this.matrix[objStart.i][objStart.j - 1].id.indexOf(tempchess) > 0 )
                                                 {
                                                     return;
                                                 }
@@ -274,17 +290,65 @@
                                     return;
                                 }    
                             }
-                            var tempchess = "do";
-                            if(event.currentTarget.id.indexOf(tempchess) < 0)
-                            {
-                                tempchess= "den";
-                            }
+                            
                             if (this.matrix[objEnd.i][objEnd.j].id != " " && this.matrix[objEnd.i][objEnd.j].id.indexOf(tempchess) >0)
                             {
                                 return;
                             }
                         }
+
+                        //Quân xe
+                        if (event.currentTarget.id.indexOf("xe") >=0 )
+                        {
+                            var tempchess = "do";
+                            if(event.currentTarget.id.indexOf(tempchess) < 0)
+                            {
+                                tempchess= "den";
+                            }
                             
+                            if((Math.abs(objStart.i - objEnd.i) > 0 && Math.abs(objStart.j - objEnd.j) == 0) ||  
+                                (Math.abs(objStart.i - objEnd.i) == 0 && Math.abs(objStart.j - objEnd.j) > 0) )
+                            {
+                                if (Math.abs(objStart.i - objEnd.i) > 0){
+                                    if (objEnd.i > objStart.i  && this.matrix[objStart.i + 1][objStart.j].id != " " &&
+                                    this.matrix[objStart.i + 1][objStart.j].id.indexOf(tempchess) > 0 )
+                                    {
+                                        return;
+                                    }
+                                    if (objEnd.i < objStart.i && this.matrix[objStart.i - 1][objStart.j].id != " " &&
+                                    this.matrix[objStart.i - 1][objStart.j].id.indexOf(tempchess) > 0 )
+                                    {
+                                        
+                                        return;
+                                    }
+                                }
+                                if(Math.abs(objStart.j - objEnd.j) > 0) 
+                                {
+                                
+                                    if (objEnd.j > objStart.j && this.matrix[objStart.i][objStart.j + 1].id != " "  &&
+                                    this.matrix[objStart.i][objStart.j + 1].id.indexOf(tempchess) > 0 )
+                                    {
+                                        return;
+                                    }
+                                    if (objEnd.j < objStart.j && this.matrix[objStart.i][objStart.j - 1].id != " " &&
+                                    this.matrix[objStart.i][objStart.j - 1].id.indexOf(tempchess) > 0 )
+                                    {
+                                        return;
+                                    }
+                                    
+                                }
+                            }
+                            else if((Math.abs(objStart.i - objEnd.i) > 0 && Math.abs(objStart.j - objEnd.j) == 0) ||  
+                            (Math.abs(objStart.i - objEnd.i) == 0 && Math.abs(objStart.j - objEnd.j) > 0) )
+                            {
+                                return;
+                            }
+                            if (this.matrix[objEnd.i][objEnd.j].id != " " && this.matrix[objEnd.i][objEnd.j].id.indexOf(tempchess) > 0)
+                            {
+                                return;
+                            }
+                            
+                        }    
                             
                         
 
@@ -352,7 +416,8 @@
                         }
                         
                         //Quân tướng
-                        if (event.currentTarget.id.indexOf("chutuong") >=0 ){
+                        if (event.currentTarget.id.indexOf("chutuong") >=0 )
+                        {
                             console.log(objStart.i);
                             if(objStart.i == 9)
                             {
@@ -362,33 +427,32 @@
                                 {
                                         console.log("KetQua:"+Math.abs(objStart.j - objEnd.j));
                                         if (Math.abs(objStart.i - objEnd.i) == 1){
-                                            if(Math.abs(objStart.j - objEnd.j) != 0)
+                                           
+                                            if (objEnd.i > objStart.i  && this.matrix[objStart.i + 1][objStart.j].id != " " &&
+                                            this.matrix[objStart.i + 1][objStart.j].id.indexOf(tempchess) > 0 )
                                             {
+                                                
                                                 return;
                                             }
-                                            else
+                                            if (objEnd.i < objStart.i && this.matrix[objStart.i - 1][objStart.j].id != " " &&
+                                            this.matrix[objStart.i - 1][objStart.j].id.indexOf(tempchess) > 0 )
                                             {
-                                                if (objEnd.i > objStart.i  && this.matrix[objStart.i + 1][objStart.j].id != " " )
-                                                {
-                                                    
-                                                    return;
-                                                }
-                                                if (objEnd.i < objStart.i && this.matrix[objStart.i - 1][objStart.j].id != " " )
-                                                {
-                                                    
-                                                    return;
-                                                }
+                                                
+                                                return;
                                             }
+                                            
                                         }
                                         if(Math.abs(objStart.j - objEnd.j) == 1) 
                                         {
                                         
-                                            if (objEnd.j > objStart.j && this.matrix[objStart.i][objStart.j + 1].id != " "  )
+                                            if (objEnd.j > objStart.j && this.matrix[objStart.i][objStart.j + 1].id != " "  &&
+                                            this.matrix[objStart.i][objStart.j + 1].id.indexOf(tempchess) > 0 )
                                             {
                                             
                                                 return;
                                             }
-                                            if (objEnd.j < objStart.j && this.matrix[objStart.i][objStart.j - 1].id != " " )
+                                            if (objEnd.j < objStart.j && this.matrix[objStart.i][objStart.j - 1].id != " " &&
+                                            this.matrix[objStart.i][objStart.j - 1].id.indexOf(tempchess) > 0 )
                                             {
                                                 
                                                 return;
@@ -436,11 +500,13 @@
                                             console.log("tuongngu2");
                                         
                                             if (Math.abs(objStart.i - objEnd.i) == 1){
-                                                if (objEnd.i > objStart.i  && this.matrix[objStart.i + 1][objStart.j].id != " " )
+                                                if (objEnd.i > objStart.i  && this.matrix[objStart.i + 1][objStart.j].id != " " &&
+                                                this.matrix[objStart.i + 1][objStart.j].id.indexOf(tempchess) > 0 )
                                                 {
                                                     return;
                                                 }
-                                                if (objEnd.i < objStart.i && this.matrix[objStart.i - 1][objStart.j].id != " " )
+                                                if (objEnd.i < objStart.i && this.matrix[objStart.i - 1][objStart.j].id != " " &&
+                                                this.matrix[objStart.i - 1][objStart.j].id.indexOf(tempchess) > 0 )
                                                 {
                                                     
                                                     return;
@@ -448,12 +514,14 @@
                                             }
                                             if(Math.abs(objStart.j - objEnd.j) == 1) 
                                             {
-                                                
-                                                if (objEnd.j > objStart.j && this.matrix[objStart.i][objStart.j + 1].id != " "  )
+                                               
+                                                if (objEnd.j > objStart.j && this.matrix[objStart.i][objStart.j + 1].id != " "  &&
+                                                this.matrix[objStart.i][objStart.j + 1].id.indexOf(tempchess) > 0 )
                                                 {
                                                     return;
                                                 }
-                                                if (objEnd.j < objStart.j && this.matrix[objStart.i][objStart.j - 1].id != " " )
+                                                if (objEnd.j < objStart.j && this.matrix[objStart.i][objStart.j - 1].id != " " &&
+                                                this.matrix[objStart.i][objStart.j - 1].id.indexOf(tempchess) > 0 )
                                                 {
                                                     return;
                                                 }
@@ -578,12 +646,13 @@
                     // Xử lý tin nhắn "ChessMove"
                     
                         var node = document.getElementById(objList[0].id);
+                       
                         node.style.top = self.matrix[objList[0].endi][objList[0].endj].top + 'px';
                         node.style.left = self.matrix[objList[0].endi][objList[0].endj].left + 'px'; 
         
                         self.matrix[objList[0].endi][objList[0].endj].id = node.id;
                         self.matrix[objList[0].starti][objList[0].startj].id = " ";
-        
+                        
                         if (objList.length === 2) {
                             document.getElementById(objList[1].id).style.display = "none";
                         }

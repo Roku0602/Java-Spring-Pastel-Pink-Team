@@ -18,6 +18,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.node.ObjectNode;
 
 import jakarta.servlet.http.HttpSession;
 import net.minidev.json.JSONArray;
@@ -26,13 +27,15 @@ import pastelpink.project.Model.ApiResponse;
 import pastelpink.project.Model.ChessMoveNodeModel;
 import pastelpink.project.Model.ChessNode;
 import pastelpink.project.Model.PointModel;
-
+import pastelpink.project.Service.ChessBoardService;
 
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 
@@ -46,17 +49,34 @@ public class ChessBoardController {
     @Autowired
     private SimpMessagingTemplate messagingTemplate;
 
+    @Autowired
+    private ChessBoardService chessBoardService;
+
+
     @GetMapping("/getChessBoard")
-    public ResponseEntity<Object> getChessBoard() {
+    public ResponseEntity<Object> getChessBoard(HttpSession session) {
         try {
-            Resource resource = new ClassPathResource("static/Data/ChessJson.txt");
+             Resource resource = new ClassPathResource("static/Data/ChessJson.txt");
+                // Góc xoay cho đội 1 hoặc đội trắng
+            int angleForTeam1 = 0;
+
+            // Góc xoay cho đội 2 hoặc đội đen
+            int angleForTeam2 = 180;
+           
+            // Resource resource = new ClassPathResource("static/Data/ChessJson.txt");
             String filePath = resource.getFile().getAbsolutePath();
             byte[] bytes = Files.readAllBytes(Paths.get(filePath));
             String chessJson = new String(bytes, StandardCharsets.UTF_8).replace("\uFEFF", "");
-            System.out.println("dữ liệu: "  + chessJson);
+            
             ObjectMapper objectMapper = new ObjectMapper();
             List<ChessNode> chessNodeList = objectMapper.readValue(chessJson, new TypeReference<List<ChessNode>>() {});
-
+            if(session.getAttribute("team") != null)
+            {
+                chessBoardService.rotateChessNodes(chessNodeList, angleForTeam1, angleForTeam2,session.getAttribute("team").toString());
+            }
+            
+            String chessCheck = String.valueOf(chessNodeList);
+            System.out.println("dữ liệu: "  + chessCheck);
             List<List<PointModel>> matrix = new ArrayList<>();
             for (int i = 0; i < 10; i++) {
                 List<PointModel> points = new ArrayList<>();
@@ -90,11 +110,11 @@ public class ChessBoardController {
         System.out.println("ok");
        
         try {
+            ObjectMapper objectMapper = new ObjectMapper();
             String moveListStr = new com.fasterxml.jackson.databind.ObjectMapper().writeValueAsString(moveList);
             System.out.println("di chuyen: "+moveListStr);
             // Tạo một đối tượng ObjectMapper từ Jackson
-            ObjectMapper objectMapper = new ObjectMapper();
-
+            
             // Chuyển đổi chuỗi JSON thành đối tượng JsonNode
             JsonNode jsonNode = objectMapper.readTree(moveListStr);
 
@@ -108,15 +128,18 @@ public class ChessBoardController {
             //session được tạo ngay sau khi join phòng
             if(session.getAttribute("team") != null)
             {
+                System.out.println(session.getAttribute("team").toString());
                 if(session.getAttribute("team").toString().equals(playerValue))
                 {
-                    
+                   
                 }
                 else
                 {
                     return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(new ApiResponse(false, "Không phải turn của bạn", null, null));
                 }
             }
+
+            
             // Gọi hàm gửi thông điệp tới client ở đây (sử dụng WebSocket hoặc một cơ chế gửi thông điệp phù hợp)
             messagingTemplate.convertAndSend("/topic/chessMove/"+roomValue, moveListStr);
 
