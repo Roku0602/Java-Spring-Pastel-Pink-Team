@@ -295,6 +295,130 @@
                             }
                             
                         }    
+
+                        //Quân tượng
+                        if (event.currentTarget.id.indexOf("tuong") >=0 )
+                        {
+                            var tempchess = "do";
+                            if(event.currentTarget.id.indexOf(tempchess) < 0)
+                            {
+                                tempchess= "den";
+                            }
+                            if( objEnd.i < 5 && objEnd.j >= 0 && objEnd.j < 9)
+                            {
+                                if((Math.abs(objStart.i - objEnd.i) == 2 && Math.abs(objStart.j - objEnd.j) == 2))
+                                {
+                                   
+                                        if(objStart.i == 0)
+                                        {
+                                            //Xung quanh ngang không bị chặn
+                                            if (objEnd.j > objStart.j && this.matrix[objStart.i + 1][objStart.j + 1].id != " "  )
+                                            {
+                                                console.log("banPick1");
+                                                return;
+                                            }
+                                            if (objEnd.j < objStart.j && this.matrix[objStart.i + 1][objStart.j - 1].id != " "  )
+                                            {
+                                                console.log("banPick12");
+                                                return;
+                                            }
+                                        }
+                                        if(objStart.i >0)
+                                        {
+                                            if(objStart.j > 0 && objStart.j < 8)
+                                            {
+                                                if (objEnd.j > objStart.j && this.matrix[objStart.i + 1][objStart.j + 1].id != " "  )
+                                                {
+                                                    console.log("banPick1");
+                                                    return;
+                                                }
+                                                if (objEnd.j < objStart.j && this.matrix[objStart.i + 1][objStart.j - 1].id != " "  )
+                                                {
+                                                    console.log("banPick12");
+                                                    return;
+                                                }
+                                                
+                                               
+                                                if (objEnd.i < objStart.i && this.matrix[objStart.i - 1][objStart.j - 1].id != " " )
+                                                {
+                                                    console.log("banPick2");
+                                                    return;
+                                                }
+                                                else if (objEnd.i > objStart.i && this.matrix[objStart.i - 1][objStart.j + 1].id != " " )
+                                                {
+                                                    console.log("banPick3");
+                                                    return;
+                                                }
+                                               
+                                                
+                                            }
+                                            else
+                                            {
+                                                if(objStart.j == 0)
+                                                {
+                                                    if(objStart.j < objEnd.j && objStart.i > objEnd.i)
+                                                    {
+                                                        if(this.matrix[objStart.i - 1][objStart.j + 1].id != " " )
+                                                        {
+                                                            console.log("banPick4");
+                                                            return;
+                                                        }
+                                                        
+                                                    }
+                                                    else if(objStart.j < objEnd.j && objStart.i < objEnd.i)
+                                                    {
+                                                        if(this.matrix[objStart.i + 1][objStart.j + 1].id != " " )
+                                                        {
+                                                            console.log("banPick4");
+                                                            return;
+                                                        }
+                                                        
+                                                    }
+                                                    
+                                                }
+                                                if(objStart.j == 8)
+                                                {
+                                                    if(objStart.j > objEnd.j && objStart.i > objEnd.i)
+                                                    {
+                                                        if(this.matrix[objStart.i - 1][objStart.j - 1].id != " " )
+                                                        {
+                                                            console.log("banPick4");
+                                                            return;
+                                                        }
+                                                        
+                                                    }
+                                                    else if(objStart.j > objEnd.j && objStart.i < objEnd.i)
+                                                    {
+                                                        if(this.matrix[objStart.i + 1][objStart.j - 1].id != " " )
+                                                        {
+                                                            console.log("banPick4");
+                                                            return;
+                                                        }
+                                                        
+                                                    }
+                                                }
+                                            }
+                                            
+                                        }
+                                       
+                                }
+                                else if((Math.abs(objStart.i - objEnd.i) != 2 && Math.abs(objStart.j - objEnd.j) != 2) || 
+                                (Math.abs(objStart.i - objEnd.i) == 2 && Math.abs(objStart.j - objEnd.j) != 2) || 
+                                (Math.abs(objStart.i - objEnd.i) != 2 && Math.abs(objStart.j - objEnd.j) == 2)
+                                )
+                                {
+                                    return;
+                                }
+                            }
+                            else
+                            {
+                                return;
+                            }
+                            if (this.matrix[objEnd.i][objEnd.j].id != " " && this.matrix[objEnd.i][objEnd.j].id.indexOf(tempchess) > 0)
+                            {
+                                return;
+                            }
+                        }
                             
                         
 
@@ -491,7 +615,124 @@
                                 return;
                             }
                             
-                        }    
+                        }  
+                        
+                        //Quân tượng
+                        if (event.currentTarget.id.indexOf("tuong") >=0 )
+                        {
+                            var tempchess = "do";
+                            if(event.currentTarget.id.indexOf(tempchess) < 0)
+                            {
+                                tempchess= "den";
+                            }
+                            if( objEnd.i > 4 && objEnd.i <= 9 && objEnd.j >= 0 && objEnd.j < 9)
+                            {
+                                if((Math.abs(objStart.i - objEnd.i) == 2 && Math.abs(objStart.j - objEnd.j) == 2))
+                                {
+                                   
+                                        if(objStart.i == 9)
+                                        {
+                                            //Xung quanh ngang không bị chặn
+                                            if (objEnd.j > objStart.j && this.matrix[objStart.i - 1][objStart.j + 1].id != " "  )
+                                            {
+                                                console.log("banPick1");
+                                                return;
+                                            }
+                                            if (objEnd.j < objStart.j && this.matrix[objStart.i - 1][objStart.j - 1].id != " "  )
+                                            {
+                                                console.log("banPick12");
+                                                return;
+                                            }
+                                        }
+                                        if(objStart.i < 9)
+                                        {
+                                            if(objStart.j > 0 && objStart.j < 8)
+                                            {
+                                                if (objEnd.j > objStart.j && this.matrix[objStart.i - 1][objStart.j + 1].id != " "  )
+                                                {
+                                                    console.log("banPick1");
+                                                    return;
+                                                }
+                                                if (objEnd.j < objStart.j && this.matrix[objStart.i - 1][objStart.j - 1].id != " "  )
+                                                {
+                                                    console.log("banPick12");
+                                                    return;
+                                                }
+                                                
+                                               
+                                                if (objEnd.i < objStart.i && this.matrix[objStart.i + 1][objStart.j - 1].id != " " )
+                                                {
+                                                    console.log("banPick2");
+                                                    return;
+                                                }
+                                                else if (objEnd.i > objStart.i && this.matrix[objStart.i - 1][objStart.j + 1].id != " " )
+                                                {
+                                                    console.log("banPick3");
+                                                    return;
+                                                }
+                                               
+                                                
+                                            }
+                                            else
+                                            {
+                                                if(objStart.j == 0)
+                                                {
+                                                   
+                                                        if( objStart.j < objEnd.j && this.matrix[objStart.i - 1][objStart.j + 1].id != " " )
+                                                        {
+                                                            console.log("banPick4");
+                                                            return;
+                                                        }
+                                                    if(objStart.i < objEnd.i)
+                                                    {
+                                                        if( objStart.j < objEnd.j && this.matrix[objStart.i + 1][objStart.j - 1].id != " " )
+                                                        {
+                                                            return;
+                                                        }
+                                                    }
+                                                }
+                                                if(objStart.j == 8)
+                                                {
+                                                    if(objStart.i > objEnd.i)
+                                                    {
+                                                        if( this.matrix[objStart.i - 1][objStart.j - 1].id != " " )
+                                                        {
+                                                            console.log("banPick4");
+                                                            return;
+                                                        }
+                                                    }
+                                                    if(objStart.i < objEnd.i)
+                                                    {
+                                                        if( this.matrix[objStart.i + 1][objStart.j - 1].id != " " )
+                                                        {
+                                                            console.log("banPick45");
+                                                            return;
+                                                        }
+                                                    }
+                                                }
+                                               
+                                            }
+                                            
+                                        }
+                                       
+                                }
+                                else if((Math.abs(objStart.i - objEnd.i) != 2 && Math.abs(objStart.j - objEnd.j) != 2) || 
+                                (Math.abs(objStart.i - objEnd.i) == 2 && Math.abs(objStart.j - objEnd.j) != 2) || 
+                                (Math.abs(objStart.i - objEnd.i) != 2 && Math.abs(objStart.j - objEnd.j) == 2)
+                                )
+                                {
+                                    return;
+                                }
+                            }
+                            else
+                            {
+                                return;
+                            }
+                            if (this.matrix[objEnd.i][objEnd.j].id != " " && this.matrix[objEnd.i][objEnd.j].id.indexOf(tempchess) > 0)
+                            {
+                                return;
+                            }
+                        }
                     }
                     else
                     {
