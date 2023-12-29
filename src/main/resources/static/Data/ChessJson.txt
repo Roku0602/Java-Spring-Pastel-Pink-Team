@@ -3,7 +3,7 @@
 	{"id": "mado1", "src":"/mado1.svg", "top":61, "left":180, "visible": "inline"},
 	{"id": "tuongdo1", "src":"/tuongdo1.svg", "top":61, "left":254, "visible": "inline"},
 	{"id": "sido1", "src":"/sido1.svg", "top":61, "left":328, "visible": "inline"},
-	{"id": "chutuongdo", "src":"/chutuongdo.svg", "top":61, "left":402, "visible": "inline"},
+	{"id": "chudo", "src":"/chutuongdo.svg", "top":61, "left":402, "visible": "inline"},
 	{"id": "sido2", "src":"/sido1.svg", "top":61, "left":476, "visible": "inline"},
 	{"id": "tuongdo2", "src":"/tuongdo1.svg", "top":61, "left":550, "visible": "inline"},
 	{"id": "mado2", "src":"/mado1.svg", "top":61, "left":624, "visible": "inline"},
@@ -32,6 +32,6 @@
 	{"id": "tuongden2", "src":"/tuongden2.svg", "top":727, "left":550, "visible": "inline"},
 	{"id": "siden1", "src":"/siden1.svg", "top":727, "left":328, "visible": "inline"},
 	{"id": "siden2", "src":"/siden2.svg", "top":727, "left":476, "visible": "inline"},
-	{"id": "chutuongden", "src":"/chutuongden.svg", "top":727, "left":401, "visible": "inline"}
+	{"id": "chuden", "src":"/chutuongden.svg", "top":727, "left":401, "visible": "inline"}
 	
 ]
