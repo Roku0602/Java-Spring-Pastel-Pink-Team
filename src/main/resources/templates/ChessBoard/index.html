@@ -314,8 +314,8 @@
                                     
                                 }
                             }
-                            else if((Math.abs(objStart.i - objEnd.i) > 0 && Math.abs(objStart.j - objEnd.j) == 0) ||  
-                            (Math.abs(objStart.i - objEnd.i) == 0 && Math.abs(objStart.j - objEnd.j) > 0) )
+                            else if((Math.abs(objStart.i - objEnd.i) > 0 && Math.abs(objStart.j - objEnd.j) != 0) ||  
+                            (Math.abs(objStart.i - objEnd.i) != 0 && Math.abs(objStart.j - objEnd.j) > 0) )
                             {
                                 return;
                             }
@@ -538,7 +538,276 @@
                             }
                         }
 
+                        //Quân Pháo
+                        if (event.currentTarget.id.indexOf("phao") >= 0) 
+                        {
+                            var tempchess = "do";
+                            if (event.currentTarget.id.indexOf(tempchess) < 0) {
+                                tempchess = "den";
+                            }
                             
+                            let obstacleCount = 0;
+                            // Điều kiện di chuyển ngang/ dọc
+                            if ((Math.abs(objStart.i - objEnd.i) > 0 && Math.abs(objStart.j - objEnd.j) == 0) ||
+                                (Math.abs(objStart.i - objEnd.i) == 0 && Math.abs(objStart.j - objEnd.j) > 0)) 
+                            {
+                                if (Math.abs(objStart.i - objEnd.i) == 1) 
+                                {
+                                    console.log(Math.abs(objStart.i - objEnd.i));
+                                    if(this.matrix[objEnd.i][objEnd.j].id != " ")
+                                    {
+                                        if (this.matrix[objEnd.i][objEnd.j].id.indexOf(tempchess) >= 0) 
+                                        {
+                                            return;
+                                        } 
+                                        else if (this.matrix[objEnd.i][objEnd.j].id.indexOf(tempchess) < 0) 
+                                        {
+                                            return;
+                                        }
+                                    }
+                                    
+                                }
+                                if (Math.abs(objStart.j - objEnd.j) == 1) 
+                                {
+                                    if(this.matrix[objEnd.i][objEnd.j].id != " ")
+                                    {
+                                        if (this.matrix[objEnd.i][objEnd.j].id.indexOf(tempchess) >= 0) 
+                                        {
+                                            return;
+                                        } 
+                                        else if (this.matrix[objEnd.i][objEnd.j].id.indexOf(tempchess) < 0) 
+                                        {
+                                            return;
+                                        }
+                                    }
+                                }
+                        
+                                if (Math.abs(objStart.i - objEnd.i) > 0) 
+                                {
+                                    if (objEnd.i > objStart.i) 
+                                    {
+                                        for (var s = objStart.i + 1; s < objEnd.i; s++) 
+                                        {
+                                            console.log("s1: "+s);
+                                            // Có vật cản
+                                            if (this.matrix[s][objStart.j].id != " ") 
+                                            {
+                                                // Nếu điểm đến có quân cờ
+                                                if (this.matrix[objEnd.i][objEnd.j].id != " ") 
+                                                {
+                                                    if (this.matrix[objEnd.i][objEnd.j].id.indexOf(tempchess) >= 0) 
+                                                    {
+                                                        return;
+                                                    } 
+                                                    else if (this.matrix[objEnd.i][objEnd.j].id.indexOf(tempchess) < 0) 
+                                                    {
+                                                        obstacleCount++;
+                                                    }
+                                                } 
+                                                else 
+                                                {
+                                                    return;
+                                                }
+                                            }
+                                            
+                                        }
+                                        if(obstacleCount < 1)
+                                        {
+                                            console.log("s: "+ s + "objEnd.j: "+objEnd.i);
+                                            console.log(s === objEnd.i);
+                                            if(s === objEnd.i)
+                                            {
+                                                    // Nếu điểm đến có quân cờ
+                                                if (this.matrix[objEnd.i][objEnd.j].id != " ") 
+                                                {
+                                                    if (this.matrix[objEnd.i][objEnd.j].id.indexOf(tempchess) >= 0) 
+                                                    {
+                                                        return;
+                                                    } 
+                                                    else if (this.matrix[objEnd.i][objEnd.j].id.indexOf(tempchess) < 0) 
+                                                    {
+                                                        return;
+                                                    }
+                                                } 
+                                                
+                                            }
+                                        }
+                                    } 
+                                    else if (objEnd.i < objStart.i) 
+                                    {
+                                        for (var s = objStart.i - 1; s > objEnd.i; s--) 
+                                        {
+                                            console.log("s2: "+s);
+                                            
+                                            // Có vật cản
+                                            if (this.matrix[s][objStart.j].id != " ") 
+                                            {
+                                                // Nếu điểm đến có quân cờ
+                                                if (this.matrix[objEnd.i][objEnd.j].id != " ") 
+                                                {
+                                                    if (this.matrix[objEnd.i][objEnd.j].id.indexOf(tempchess) >= 0) 
+                                                    {
+                                                        return;
+                                                    } 
+                                                    else if (this.matrix[objEnd.i][objEnd.j].id.indexOf(tempchess) < 0) 
+                                                    {
+                                                        obstacleCount++;
+                                                    }
+                                                } 
+                                                else {
+                                                    return;
+                                                }
+                                            }
+                                            
+                                        
+                                        }
+                                        if(obstacleCount < 1)
+                                        {
+                                            console.log("s: "+ s + "objEnd.j: "+objEnd.i);
+                                            console.log(s === objEnd.i);
+                                            
+                                            if(s === objEnd.i)
+                                            {
+                                                    // Nếu điểm đến có quân cờ
+                                                if (this.matrix[objEnd.i][objEnd.j].id != " ") 
+                                                {
+                                                    if (this.matrix[objEnd.i][objEnd.j].id.indexOf(tempchess) >= 0) 
+                                                    {
+                                                        return;
+                                                    } 
+                                                    else if (this.matrix[objEnd.i][objEnd.j].id.indexOf(tempchess) < 0) 
+                                                    {
+                                                        return;
+                                                    }
+                                                } 
+                                                
+                                            }
+                                        }
+                                    }
+                                }
+                                if (Math.abs(objStart.j - objEnd.j) > 0) 
+                                {
+                                    if (objEnd.j > objStart.j) 
+                                    {
+                                        for (var s = objStart.j + 1; s < objEnd.j; s++) 
+                                        {
+                                            console.log("s3: "+s);
+                                            // Có vật cản
+                                            if (this.matrix[objStart.i][s].id != " ") 
+                                            {
+                                                console.log("stun success");
+                                                // Nếu điểm đến có quân cờ
+                                                if (this.matrix[objEnd.i][objEnd.j].id != " ") 
+                                                {
+                                                    if (this.matrix[objEnd.i][objEnd.j].id.indexOf(tempchess) >= 0) 
+                                                    {
+                                                        return;
+                                                    } 
+                                                    else if (this.matrix[objEnd.i][objEnd.j].id.indexOf(tempchess) < 0) 
+                                                    {
+                                                        
+                                                        obstacleCount++;
+                                                        console.log("Sau bi chan: "+obstacleCount);
+                                                    }
+                                                } 
+                                                else 
+                                                {
+                                                    return;
+                                                }
+                                            }
+                                            
+                                        }
+                                        if(obstacleCount < 1)
+                                        {
+                                            console.log("s: "+ s + "objEnd.j: "+objEnd.j);
+                                            
+                                            console.log(s+1 == objEnd.j);
+                                            if(s == objEnd.j)
+                                            {
+                                                    // Nếu điểm đến có quân cờ
+                                                if (this.matrix[objEnd.i][objEnd.j].id != " ") 
+                                                {
+                                                    if (this.matrix[objEnd.i][objEnd.j].id.indexOf(tempchess) >= 0) 
+                                                    {
+                                                        return;
+                                                    } 
+                                                    else if (this.matrix[objEnd.i][objEnd.j].id.indexOf(tempchess) < 0) 
+                                                    {
+                                                        return;
+                                                    }
+                                                } 
+                                                
+                                            }
+                                        }
+                                        
+                                    } 
+                                    else if (objEnd.j < objStart.j) 
+                                    {
+                                        for (var s = objStart.j - 1; s > objEnd.j; s--) 
+                                        {
+                                            // Có vật cản
+                                            if (this.matrix[objStart.i][s].id != " ") 
+                                            {
+                                                // Nếu điểm đến có quân cờ
+                                                if (this.matrix[objEnd.i][objEnd.j].id != " ") 
+                                                {
+                                                    if (this.matrix[objEnd.i][objEnd.j].id.indexOf(tempchess) >= 0) 
+                                                    {
+                                                        return;
+                                                    } else if (this.matrix[objEnd.i][objEnd.j].id.indexOf(tempchess) < 0) 
+                                                    {
+                                                        obstacleCount++;
+                                                    }
+                                                } else 
+                                                {
+                                                    return;
+                                                }
+                                            }
+                                            
+                                        }
+                                        if(obstacleCount < 1)
+                                        {
+                                            console.log("s: "+ s + "objEnd.j: "+objEnd.j);
+                                            console.log(s === objEnd.j);
+                                            console.log(s-1 == objEnd.j);
+                                            if(s == objEnd.j)
+                                            {
+                                                    // Nếu điểm đến có quân cờ
+                                                if (this.matrix[objEnd.i][objEnd.j].id != " ") 
+                                                {
+                                                    if (this.matrix[objEnd.i][objEnd.j].id.indexOf(tempchess) >= 0) 
+                                                    {
+                                                        return;
+                                                    } 
+                                                    else if (this.matrix[objEnd.i][objEnd.j].id.indexOf(tempchess) < 0) 
+                                                    {
+                                                        return;
+                                                    }
+                                                } 
+                                                
+                                            }
+                                        }
+                                        
+                                        
+                                    }
+                                }
+                                console.log("SL Vat can: "+obstacleCount);
+                                //Nếu vật cản > 1 quân
+                                if(obstacleCount > 1)
+                                {
+                                    
+                                    return;
+                                }
+                            } 
+                            else if ((Math.abs(objStart.i - objEnd.i) > 0 || Math.abs(objStart.j - objEnd.j) > 0)) 
+                            {
+                                return;
+                            }
+                        
+                            if (this.matrix[objEnd.i][objEnd.j].id != " " && this.matrix[objEnd.i][objEnd.j].id.indexOf(tempchess) >= 0) {
+                                return;
+                            }
+                        }
                         
 
                         
@@ -971,6 +1240,277 @@
                                 return;
                             }
                         }
+
+                        //Quân Pháo
+                        if (event.currentTarget.id.indexOf("phao") >= 0) 
+                        {
+                            var tempchess = "do";
+                            if (event.currentTarget.id.indexOf(tempchess) < 0) {
+                                tempchess = "den";
+                            }
+                            
+                            let obstacleCount = 0;
+                            // Điều kiện di chuyển ngang/ dọc
+                            if ((Math.abs(objStart.i - objEnd.i) > 0 && Math.abs(objStart.j - objEnd.j) == 0) ||
+                                (Math.abs(objStart.i - objEnd.i) == 0 && Math.abs(objStart.j - objEnd.j) > 0)) 
+                            {
+                                if (Math.abs(objStart.i - objEnd.i) == 1) 
+                                {
+                                    console.log(Math.abs(objStart.i - objEnd.i));
+                                    if(this.matrix[objEnd.i][objEnd.j].id != " ")
+                                    {
+                                        if (this.matrix[objEnd.i][objEnd.j].id.indexOf(tempchess) >= 0) 
+                                        {
+                                            return;
+                                        } 
+                                        else if (this.matrix[objEnd.i][objEnd.j].id.indexOf(tempchess) < 0) 
+                                        {
+                                            return;
+                                        }
+                                    }
+                                    
+                                }
+                                if (Math.abs(objStart.j - objEnd.j) == 1) 
+                                {
+                                    if(this.matrix[objEnd.i][objEnd.j].id != " ")
+                                    {
+                                        if (this.matrix[objEnd.i][objEnd.j].id.indexOf(tempchess) >= 0) 
+                                        {
+                                            return;
+                                        } 
+                                        else if (this.matrix[objEnd.i][objEnd.j].id.indexOf(tempchess) < 0) 
+                                        {
+                                            return;
+                                        }
+                                    }
+                                }
+                        
+                                if (Math.abs(objStart.i - objEnd.i) > 0) 
+                                {
+                                    if (objEnd.i > objStart.i) 
+                                    {
+                                        for (var s = objStart.i + 1; s < objEnd.i; s++) 
+                                        {
+                                            console.log("s1: "+s);
+                                            // Có vật cản
+                                            if (this.matrix[s][objStart.j].id != " ") 
+                                            {
+                                                // Nếu điểm đến có quân cờ
+                                                if (this.matrix[objEnd.i][objEnd.j].id != " ") 
+                                                {
+                                                    if (this.matrix[objEnd.i][objEnd.j].id.indexOf(tempchess) >= 0) 
+                                                    {
+                                                        return;
+                                                    } 
+                                                    else if (this.matrix[objEnd.i][objEnd.j].id.indexOf(tempchess) < 0) 
+                                                    {
+                                                        obstacleCount++;
+                                                    }
+                                                } 
+                                                else 
+                                                {
+                                                    return;
+                                                }
+                                            }
+                                            
+                                        }
+                                        if(obstacleCount < 1)
+                                        {
+                                            console.log("s: "+ s + "objEnd.j: "+objEnd.i);
+                                            console.log(s === objEnd.i);
+                                            if(s === objEnd.i)
+                                            {
+                                                    // Nếu điểm đến có quân cờ
+                                                if (this.matrix[objEnd.i][objEnd.j].id != " ") 
+                                                {
+                                                    if (this.matrix[objEnd.i][objEnd.j].id.indexOf(tempchess) >= 0) 
+                                                    {
+                                                        return;
+                                                    } 
+                                                    else if (this.matrix[objEnd.i][objEnd.j].id.indexOf(tempchess) < 0) 
+                                                    {
+                                                        return;
+                                                    }
+                                                } 
+                                                
+                                            }
+                                        }
+                                    } 
+                                    else if (objEnd.i < objStart.i) 
+                                    {
+                                        for (var s = objStart.i - 1; s > objEnd.i; s--) 
+                                        {
+                                            console.log("s2: "+s);
+                                            
+                                            // Có vật cản
+                                            if (this.matrix[s][objStart.j].id != " ") 
+                                            {
+                                                // Nếu điểm đến có quân cờ
+                                                if (this.matrix[objEnd.i][objEnd.j].id != " ") 
+                                                {
+                                                    if (this.matrix[objEnd.i][objEnd.j].id.indexOf(tempchess) >= 0) 
+                                                    {
+                                                        return;
+                                                    } 
+                                                    else if (this.matrix[objEnd.i][objEnd.j].id.indexOf(tempchess) < 0) 
+                                                    {
+                                                        obstacleCount++;
+                                                    }
+                                                } 
+                                                else {
+                                                    return;
+                                                }
+                                            }
+                                            
+                                        
+                                        }
+                                        if(obstacleCount < 1)
+                                        {
+                                            console.log("s: "+ s + "objEnd.j: "+objEnd.i);
+                                            console.log(s === objEnd.i);
+                                            
+                                            if(s === objEnd.i)
+                                            {
+                                                    // Nếu điểm đến có quân cờ
+                                                if (this.matrix[objEnd.i][objEnd.j].id != " ") 
+                                                {
+                                                    if (this.matrix[objEnd.i][objEnd.j].id.indexOf(tempchess) >= 0) 
+                                                    {
+                                                        return;
+                                                    } 
+                                                    else if (this.matrix[objEnd.i][objEnd.j].id.indexOf(tempchess) < 0) 
+                                                    {
+                                                        return;
+                                                    }
+                                                } 
+                                                
+                                            }
+                                        }
+                                    }
+                                }
+                                if (Math.abs(objStart.j - objEnd.j) > 0) 
+                                {
+                                    if (objEnd.j > objStart.j) 
+                                    {
+                                        for (var s = objStart.j + 1; s < objEnd.j; s++) 
+                                        {
+                                            console.log("s3: "+s);
+                                            // Có vật cản
+                                            if (this.matrix[objStart.i][s].id != " ") 
+                                            {
+                                                console.log("stun success");
+                                                // Nếu điểm đến có quân cờ
+                                                if (this.matrix[objEnd.i][objEnd.j].id != " ") 
+                                                {
+                                                    if (this.matrix[objEnd.i][objEnd.j].id.indexOf(tempchess) >= 0) 
+                                                    {
+                                                        return;
+                                                    } 
+                                                    else if (this.matrix[objEnd.i][objEnd.j].id.indexOf(tempchess) < 0) 
+                                                    {
+                                                        
+                                                        obstacleCount++;
+                                                        console.log("Sau bi chan: "+obstacleCount);
+                                                    }
+                                                } 
+                                                else 
+                                                {
+                                                    return;
+                                                }
+                                            }
+                                            
+                                        }
+                                        if(obstacleCount < 1)
+                                        {
+                                            console.log("s: "+ s + "objEnd.j: "+objEnd.j);
+                                            
+                                            console.log(s+1 == objEnd.j);
+                                            if(s == objEnd.j)
+                                            {
+                                                    // Nếu điểm đến có quân cờ
+                                                if (this.matrix[objEnd.i][objEnd.j].id != " ") 
+                                                {
+                                                    if (this.matrix[objEnd.i][objEnd.j].id.indexOf(tempchess) >= 0) 
+                                                    {
+                                                        return;
+                                                    } 
+                                                    else if (this.matrix[objEnd.i][objEnd.j].id.indexOf(tempchess) < 0) 
+                                                    {
+                                                        return;
+                                                    }
+                                                } 
+                                                
+                                            }
+                                        }
+                                        
+                                    } 
+                                    else if (objEnd.j < objStart.j) 
+                                    {
+                                        for (var s = objStart.j - 1; s > objEnd.j; s--) 
+                                        {
+                                            // Có vật cản
+                                            if (this.matrix[objStart.i][s].id != " ") 
+                                            {
+                                                // Nếu điểm đến có quân cờ
+                                                if (this.matrix[objEnd.i][objEnd.j].id != " ") 
+                                                {
+                                                    if (this.matrix[objEnd.i][objEnd.j].id.indexOf(tempchess) >= 0) 
+                                                    {
+                                                        return;
+                                                    } else if (this.matrix[objEnd.i][objEnd.j].id.indexOf(tempchess) < 0) 
+                                                    {
+                                                        obstacleCount++;
+                                                    }
+                                                } else 
+                                                {
+                                                    return;
+                                                }
+                                            }
+                                            
+                                        }
+                                        if(obstacleCount < 1)
+                                        {
+                                            console.log("s: "+ s + "objEnd.j: "+objEnd.j);
+                                            console.log(s === objEnd.j);
+                                            console.log(s-1 == objEnd.j);
+                                            if(s == objEnd.j)
+                                            {
+                                                    // Nếu điểm đến có quân cờ
+                                                if (this.matrix[objEnd.i][objEnd.j].id != " ") 
+                                                {
+                                                    if (this.matrix[objEnd.i][objEnd.j].id.indexOf(tempchess) >= 0) 
+                                                    {
+                                                        return;
+                                                    } 
+                                                    else if (this.matrix[objEnd.i][objEnd.j].id.indexOf(tempchess) < 0) 
+                                                    {
+                                                        return;
+                                                    }
+                                                } 
+                                                
+                                            }
+                                        }
+                                        
+                                        
+                                    }
+                                }
+                                console.log("SL Vat can: "+obstacleCount);
+                                //Nếu vật cản > 1 quân
+                                if(obstacleCount > 1)
+                                {
+                                    
+                                    return;
+                                }
+                            } 
+                            else if ((Math.abs(objStart.i - objEnd.i) > 0 || Math.abs(objStart.j - objEnd.j) > 0)) 
+                            {
+                                return;
+                            }
+                        
+                            if (this.matrix[objEnd.i][objEnd.j].id != " " && this.matrix[objEnd.i][objEnd.j].id.indexOf(tempchess) >= 0) {
+                                return;
+                            }
+                        }
  
                     }
                     else
@@ -981,7 +1521,7 @@
 
                 }
                 else {
-                    // It's not the current player's turn, handle accordingly
+                    
                     console.log("It's not your turn!");
                 }
                 
