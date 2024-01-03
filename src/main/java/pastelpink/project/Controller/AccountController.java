@@ -56,6 +56,7 @@ public class AccountController {
             session.setAttribute("errorLog", "Tài khoản hoặc mật khẩu không chính xác!");
             return "redirect:/login";
         }
+        System.out.println(session.getAttribute("user"));
          return "redirect:/play/start/1";
     }
 

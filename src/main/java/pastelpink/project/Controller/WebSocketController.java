@@ -14,8 +14,8 @@ public class WebSocketController {
     @Autowired
     private SimpMessagingTemplate messagingTemplate;
 
-    @MessageMapping("/sendMessage")
-    @SendTo("/topic/receiveMessage")
+    @MessageMapping("/sendMessage/{idRoom}")
+    @SendTo("/topic/messages/{idRoom}")
     public WebSocketMessageModel sendMessage(WebSocketMessageModel message) {
         return message;
     }
