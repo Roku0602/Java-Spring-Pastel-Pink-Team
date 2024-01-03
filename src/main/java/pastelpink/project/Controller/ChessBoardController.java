@@ -150,5 +150,25 @@ public class ChessBoardController {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(new ApiResponse(false, "Lỗi: "+ e.getMessage(), null, null));
         }
     }
+
+    private boolean reloadPage = false;
+
+    @PostMapping("/reload-board")
+     public ResponseEntity<Object> reload(@RequestBody String idroom)
+     {
+        try{
+            this.reloadPage = true;
+            System.out.println("Ok sent to room: "+idroom);
+            //Xử lý -1 số lượng người tham gia + chuyển người chơi reload về trang chủ + Kết thúc ván đấu
+            
+            
+            return ResponseEntity.ok().body(new ApiResponse(true, "",null,null));       
+        }catch (Exception e) {
+            e.printStackTrace();
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(new ApiResponse(false, "Lỗi: "+ e.getMessage(), null, null));
+        }
+
+        
+     }
 }
 

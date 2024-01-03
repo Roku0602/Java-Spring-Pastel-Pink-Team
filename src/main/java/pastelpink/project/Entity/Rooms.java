@@ -26,7 +26,7 @@ public class Rooms {
     @Size(max = 30)
     private String TenPhong;
 
-    @Column(name = "room_password", nullable = false)
+    @Column(name = "room_password", nullable = true)
     private String RoomPassword;
 
     @ManyToMany

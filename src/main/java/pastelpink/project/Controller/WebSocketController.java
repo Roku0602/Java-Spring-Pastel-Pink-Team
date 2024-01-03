@@ -1,13 +1,18 @@
 package pastelpink.project.controller;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.messaging.handler.annotation.SendTo;
 import org.springframework.stereotype.Controller;
+import org.springframework.messaging.simp.SimpMessagingTemplate;
 
 import pastelpink.project.Model.WebSocketMessageModel;
 
 @Controller
 public class WebSocketController {
+
+    @Autowired
+    private SimpMessagingTemplate messagingTemplate;
 
     @MessageMapping("/sendMessage")
     @SendTo("/topic/receiveMessage")
@@ -20,6 +25,23 @@ public class WebSocketController {
     public String chessMove(String moveNode) {
         return moveNode;
     }
+
+    @MessageMapping("/chessReload/{idRoom}")
+    @SendTo("/topic/chessReload/{idRoom}")
+    public String chessReloaded(String moveNode) {
+        return moveNode;
+    }
+
+   
+    // private boolean reloadPage = false;
+    // @MessageMapping("/reloadPage/{id}")
+    // @SendTo("/topic/reloadPage/{id}")
+    // public String reloadPage(String roomid) {
+       
+    //     // Gửi thông báo đến tất cả các kết nối khác
+    //     System.out.println("===========================================================================");
+    //    return  roomid;
+    // }
 
     
 }
