@@ -38,10 +38,11 @@ public class AccountController {
 
     @PostMapping("/login")
     public String loginfunc(Model model,@RequestParam(name = "username") String tk,
-            @RequestParam(name = "password") String mk, HttpSession session) {
+            @RequestParam(name = "password") String mk, HttpSession session) 
+    {
                 System.out.println("tk:"+tk+"mk"+mk);
                  String md5Hash = DigestUtils.md5Hex(mk.trim());
-                 System.out.println("end/ "+md5Hash);
+                 System.out.println("end: "+md5Hash);
         int login = accountService.Login(tk, mk);
         if(login == 1)
         {
@@ -59,7 +60,7 @@ public class AccountController {
             session.setAttribute("errorLog", "Tài khoản hoặc mật khẩu không chính xác!");
             return "redirect:/login";
         }
-        System.out.println(session.getAttribute("user"));
+        
          return "redirect:/";
     }
 
@@ -83,12 +84,12 @@ public class AccountController {
     //     return "redirect:/";
     //  }
 
-    @GetMapping("/logout")
+    @PostMapping("/logout")
     public String logout(HttpSession session) {
         // Xóa tất cả các attribute của session
         session.invalidate();
         // Chuyển hướng đến trang đăng nhập hoặc trang chính của ứng dụng
-        return "redirect:/login";
+        return "redirect:/";
     }
 
     

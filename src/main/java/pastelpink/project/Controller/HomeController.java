@@ -33,6 +33,13 @@ public class HomeController {
         return "Home/index.html";
     }
 
+    @GetMapping("/rooms/add")
+    public String AddNewRoom(HttpSession session,Model model)
+    {
+        
+        return "redirect:/";
+    }
+    
     @GetMapping("/play/start/{id}")
     public String ChessBoard(HttpSession session,@PathVariable("id")  int id)
     {

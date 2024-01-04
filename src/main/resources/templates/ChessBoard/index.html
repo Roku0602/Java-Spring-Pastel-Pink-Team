@@ -5,9 +5,13 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
-    <!-- Add necessary dependencies, styles, and scripts -->
+    <meta charset="UTF-8">
+    <title>Chess List</title>
+    <th:block th:replace="~{layout::link-css}"></th:block>
 </head>
+
 <body>
+    <th:block th:replace="~{layout::header}"></th:block>
     <style>
         .chessboard {
             background-image: url("/images/bancotuong.jpg");
@@ -27,7 +31,7 @@
             height: 50px;
         }
     </style>
-    <div id="app" style="min-height:900px">
+    <div layout:fragment="content" id="app" style="min-height:900px">
         
         <div class="chessboard">
             <div v-for="item in chessNode" class="chessnode"
@@ -39,7 +43,7 @@
         </div>
     </div>
     <!--Chat-->
-    <div class="container">
+    <div layout:fragment="content" class="container">
         <div class="row p-1">
             <div class="col-1">User</div>
             <div class="col-5"><input type="text" id="userInput" th:value="${session.playername}" readonly="readonly" /></div>
@@ -64,6 +68,7 @@
             </div>
         </div>
     </div>
+    <th:block th:replace="~{layout::footer}"></th:block>
 </body>
 </html>
 <script th:src="@{/js/chat.js}"></script>
@@ -1883,37 +1888,16 @@
                     });
                 // Thêm code xử lý khi người dùng thoát khỏi trang qua nút back ở đây
             });
+
+            
             //thoát trang
-/*            window.addEventListener('beforeunload', function () {
-                if (isReloading) {
-                    isReloading = true;
-                    // Đang load lại trang
-                    // Thực hiện các hành động khi trang được load lại
-                } else {
-                    
-                    // Đang thoát trang
-                    // Thực hiện các hành động khi trang được thoát
-                    axios.post('/api/reload-board',room
+            document.getElementById("home").onclick = function(event) {
+                axios.post('/api/reload-board',room
                     ).then(response => {
                         console.log('OkSent');
                     });
-                }
-            });
-
-           
-
-            window.addEventListener('beforeunload', function (event) {
-                // Kiểm tra điều kiện để xác định có đang load lại trang hay thoát trang
-                if (isReloading) {
-                    // Đang load lại trang
-                    // Thực hiện các hành động khi trang được load lại
-                } else {
-                    // Đang thoát trang
-                    // Thực hiện các hành động khi trang được thoát
-                }
-            });
-            
-    */       
+              };
+      
             stompClient.connect({}, function (frame) {
                 console.log('WebSocket connection opened.');
                 // Đăng ký để lắng nghe tin nhắn từ topic "/topic/chessMove"
@@ -1933,6 +1917,21 @@
                         
                         if (objList.length === 2) {
                             document.getElementById(objList[1].id).style.display = "none";
+                            if(objList[1].id.indexOf("chu") >= 0)
+                            {
+                                if(objList[1].id.indexOf("den") >= 0)
+                                {
+                                    
+                                    alert("Người chiến thắng: Phe đỏ");
+                                    location.reload();
+                                      
+                                }
+                                else if(objList[1].id.indexOf("do") >= 0)
+                                {
+                                    alert("Người chiến thắng: Phe đen");
+                                    location.reload();
+                                }
+                            }
                         }
                         self.currentPlayer = objList[0].player;
                         self.currentPlayer = (self.currentPlayer === 'do') ? 'den' : 'do';
