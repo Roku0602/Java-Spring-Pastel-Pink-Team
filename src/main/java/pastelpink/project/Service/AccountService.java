@@ -31,4 +31,12 @@ public class AccountService {
         }
         
     }
+
+    public String getUser(String email)
+    {
+        User u = userRepository.findAll().stream().filter(q-> q.getEmail().toString().trim().equals(email.toString().trim())).findFirst().get();
+        String name = u.getTen();
+
+        return name;
+    }
 }

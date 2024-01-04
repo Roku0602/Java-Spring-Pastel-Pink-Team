@@ -45,11 +45,9 @@ public class AccountController {
                 session.removeAttribute("errorLog");
             }
             session.setAttribute("user", tk);
-            //Test và sẽ chuyển qua code tạo và join phòng
-            if(tk.trim().equals("admin01@gmail.com"))
-                session.setAttribute("team", "do");
-            else
-                session.setAttribute("team", "den");
+            String name = accountService.getUser(tk);
+            session.setAttribute("playername",name );
+           
         }
         else
         {
@@ -57,7 +55,7 @@ public class AccountController {
             return "redirect:/login";
         }
         System.out.println(session.getAttribute("user"));
-         return "redirect:/play/start/1";
+         return "redirect:/";
     }
 
     @GetMapping("/logout")

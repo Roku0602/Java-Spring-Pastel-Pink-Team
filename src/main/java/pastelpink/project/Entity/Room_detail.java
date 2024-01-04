@@ -21,14 +21,17 @@ public class Room_detail {
     @ManyToOne
     @MapsId("id_room")
     @JoinColumn(name = "id_room", referencedColumnName = "IdRoom")
-    Rooms Room;
+    Rooms Roomid;
 
     @ManyToOne
     @MapsId("id_user")
     @JoinColumn(name = "id_user", referencedColumnName = "IdUser")
-    User User;
+    User Userid;
 
     @Column(name = "NgayTao")
     @Valid()
     private LocalDate NgayTao;
+
+    @Column(name= "SoLuong", nullable= true)
+    private Integer SoLuong;
 }

@@ -28,6 +28,7 @@ import pastelpink.project.Model.ChessMoveNodeModel;
 import pastelpink.project.Model.ChessNode;
 import pastelpink.project.Model.PointModel;
 import pastelpink.project.Service.ChessBoardService;
+import pastelpink.project.Service.HomeService;
 
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
@@ -153,15 +154,27 @@ public class ChessBoardController {
 
     private boolean reloadPage = false;
 
+    @Autowired
+    HomeService homeService;
+
     @PostMapping("/reload-board")
-     public ResponseEntity<Object> reload(@RequestBody String idroom)
+     public ResponseEntity<Object> reload(HttpSession session,@RequestBody String idroom)
      {
         try{
             this.reloadPage = true;
             System.out.println("Ok sent to room: "+idroom);
             //Xử lý -1 số lượng người tham gia + chuyển người chơi reload về trang chủ + Kết thúc ván đấu
-            
-            
+            homeService.outgame(Integer.parseInt(idroom.trim()));
+            if(session.getAttribute("team").toString().equals("do"))
+            {
+                session.removeAttribute("team");
+                homeService.stopgame(Integer.parseInt(idroom.trim()));
+            }
+            else if(session.getAttribute("team").toString().equals("den"))
+            {
+                session.removeAttribute("team");
+                homeService.stopgame(Integer.parseInt(idroom.trim()));
+            }
             return ResponseEntity.ok().body(new ApiResponse(true, "",null,null));       
         }catch (Exception e) {
             e.printStackTrace();
