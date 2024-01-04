@@ -1,0 +1,67 @@
+
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/html">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" th:href="@{/css/login-style.css}">
+    <link rel="stylesheet" href="https://unicons.iconscout.com/release/v4.0.0/css/line.css">
+    <link rel="stylesheet" th:href="@{/fonts/fontawesome-free-6.2.1-web/fontawesome-free-6.2.1-web/css/all.css}">
+    <title>Document</title>
+</head>
+<body>
+    <div class = "signup">
+        <h1 class="signup-heading">Đăng ký</h1>
+        <button class = "signup-social">
+            <i class = "uil uil-google signup-social-icon"></i>
+            <span class = "signup-social-text">Sign up with Google</span>
+        </button>
+        <button class = "signup-social">
+            <i class="uil uil-facebook-f signup-social-icon"></i>
+            <span class = "signup-social-text">Sign up with facebook</span>
+        </button>
+        
+        
+        <div class = "signup-or"><span>OR</span></div>
+            <form class="bg-light p-4 my-3"  th:action="@{/signup/}" method="post">
+                <div class = "form-group">
+                    <label for="fullname"  class="signup-label">Họ tên người dùng</label>
+                    <input type="text" name="fullname" class="signup-input" placeholder = "Họ tên người dùng" id = "fullname">
+                </div>
+                <div class = "form-group">
+                    <label for="email"  class="signup-label">Email</label>
+                    <input type="text" name="email" class="signup-input" placeholder = "Email" id = "email">
+                </div>
+                <div class = "form-group">  
+                    <label for="phone number"  class="signup-label">Số điện thoại</label>
+                    <input type="text" name="phonenumber" class="signup-input" placeholder = "Số điện thoại" id = "phonenumber">
+                </div>
+                <div class = "form-group">
+                    <label for="address"  class="signup-label">Địa chỉ</label>
+                    <input type="text" name="address" class="signup-input" placeholder = "Địa chỉ" id = "address">
+                </div>
+                <div class = "form-group">
+                    <label for="username"  class="signup-label">Tài khoản</label>
+                    <input type="text" name="username"  class="signup-input" placeholder = "Tên tài khoản" required >   
+                </div>
+                <label for="password"  class="signup-label">Mật khẩu</label>
+                    <div class="password-container">
+                        <label>
+                            <input type="password" name="password" class="signup-input" id="password" placeholder = "Mật khẩu" required>
+                            <i class="fa-solid fa-eye" id="eye" onclick="myFunction()"></i>
+                        </label>
+                    </div>
+                    <button class="signup-submit" name="btn-reg">Đăng ký</button>
+            </form>
+            <p class="signup-already">
+                <span>Đã có tài khoản</span>
+                <a href = "login.html" class = "signup-login">Đăng nhập</a>
+            </p>
+        </div>
+            
+        
+    </div>
+  
+</body>
+</html>

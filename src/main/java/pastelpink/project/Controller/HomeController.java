@@ -41,16 +41,29 @@ public class HomeController {
             Room_detail countplayer = homeService.CheckCountNumPlayer(id);
             if(countplayer != null)
             {
-                if(countplayer.getSoLuong() < 2 && countplayer.getSoLuong() > 0)
+                if(session.getAttribute("playeronRoom") != null)
                 {
-                    session.setAttribute("team", "den");
-                    homeService.updateRoomPlayerCount(id);
+                    if(session.getAttribute("playeronRoom").toString().trim().equals(id))
+                    {
+                        //Người chơi đã ở ngay trong phòng, không cần tăng thêm
+                    }
                 }
-                else if(countplayer.getSoLuong() == 0 || countplayer.getSoLuong() == null)
-                {   
-                    session.setAttribute("team", "do");
-                    homeService.updateRoomPlayerCount(id);
+                else
+                {
+                    if(countplayer.getSoLuong() < 2 && countplayer.getSoLuong() > 0)
+                        {
+                            session.setAttribute("team", "den");
+                            homeService.updateRoomPlayerCount(id);
+                            session.setAttribute("playeronRoom", id);
+                        }
+                        else if(countplayer.getSoLuong() == 0 || countplayer.getSoLuong() == null)
+                        {   
+                            session.setAttribute("team", "do");
+                            homeService.updateRoomPlayerCount(id);
+                            session.setAttribute("playeronRoom", id);
+                        }
                 }
+                
             }
             else
             {

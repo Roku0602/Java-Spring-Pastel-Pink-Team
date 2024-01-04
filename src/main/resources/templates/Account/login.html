@@ -12,16 +12,14 @@
 </head>
 <body>
     <div class = "signup" id="wrapper">
-        <button class = "signup-social">
-            <i class = "uil uil-google signup-social-icon"></i>
-            <span class = "signup-social-text">Login with Google</span>
-        </button>
-        <button class = "signup-social">
-            <i class="uil uil-facebook-f signup-social-icon"></i>
-            <span class = "signup-social-text">Login with facebook</span>
-        </button>
+       <!-- <form id="google-login" th:action="@{/GoogleLogin}" method="get">
+            <button class = "signup-social">
+                <i class = "uil uil-google signup-social-icon"></i>
+                <span class = "signup-social-text">Login with Google</span>
+            </button>
+        </form>-->
         
-        <div class = "signup-or"><span>OR</span></div>
+        <!--<div class = "signup-or"><span>OR</span></div>-->
         <form id="form-login" th:action="@{/login}" class="bg-light p-4 my-3" method="post">
             <h1 class="signup-heading">Đăng nhập</h1>
             <!--<div th:if='${session.getAttribute("errorLog") != null}'>

@@ -33,15 +33,14 @@ public class WebSocketController {
     }
 
    
-    // private boolean reloadPage = false;
-    // @MessageMapping("/reloadPage/{id}")
-    // @SendTo("/topic/reloadPage/{id}")
-    // public String reloadPage(String roomid) {
+    @MessageMapping("/reloadPage/{id}")
+    @SendTo("/topic/reloadPage/{id}")
+    public String reloadPage(String roomid) {
        
-    //     // Gửi thông báo đến tất cả các kết nối khác
-    //     System.out.println("===========================================================================");
-    //    return  roomid;
-    // }
+        // Gửi thông báo đến tất cả các kết nối khác
+        System.out.println("===========================================================================");
+       return  roomid;
+    }
 
     
 }

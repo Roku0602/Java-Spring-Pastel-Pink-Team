@@ -39,4 +39,26 @@ public class AccountService {
 
         return name;
     }
+
+    public int AccountIsAvailable(String email)
+    {
+        User u;
+        try
+        {
+            u = userRepository.findAll().stream().filter(q-> q.getEmail().toString().trim().equals(email.toString().trim())).findFirst().get();  
+        }
+        catch(Exception e)
+        {
+            u = null;
+        }
+
+        if(u != null)
+        {
+                return 1;
+        }
+        else
+        {
+            return 0;
+        }
+    }
 }

@@ -31,6 +31,11 @@ public class AccountController {
         return "Account/login.html";
     }
 
+    // @GetMapping("/GoogleLogin")
+    //  public String LoginGoogle() {
+    //     return "Account/loginGoogle"; // Trả về tên của view
+    // }
+
     @PostMapping("/login")
     public String loginfunc(Model model,@RequestParam(name = "username") String tk,
             @RequestParam(name = "password") String mk, HttpSession session) {
@@ -57,6 +62,26 @@ public class AccountController {
         System.out.println(session.getAttribute("user"));
          return "redirect:/";
     }
+
+    //  @GetMapping("/LoginGoogleSuccess")
+    //  public String AfterLogin(OAuth2AuthenticationToken authentication, HttpSession session, Model model)
+    //  {
+    //     OAuth2User oauth2User = (OAuth2User) authentication.getPrincipal();
+    //     int ketquakiemtra = accountService.AccountIsAvailable(oauth2User.getAttribute("email"));
+    //     if(ketquakiemtra == 1)
+    //     {
+    //         //Đã tồn tại tài khoản
+    //         session.setAttribute("user", oauth2User.getAttribute("email"));
+    //         // String name = accountService.getUser(tk);
+    //         session.setAttribute("playername",oauth2User.getAttribute("name"));
+    //     }
+    //     else
+    //     {
+    //         //Chưa tồn tại tài khoản
+    //     }
+        
+    //     return "redirect:/";
+    //  }
 
     @GetMapping("/logout")
     public String logout(HttpSession session) {

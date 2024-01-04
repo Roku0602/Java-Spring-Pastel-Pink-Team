@@ -1853,30 +1853,67 @@
             var room = window.location.pathname.split('/').pop();
             var isReloading = false;
 
-            //Reload trang
-            window.addEventListener('beforeunload', function () {
-                isReloading = true;
-                 //Lưu di chuyển
-                axios.post('/api/reload-board',room
-                ).then(response => {
-                    console.log('OkSent');
+            if (window.performance) {
+                console.info("window.performance works fine on this browser");
+            }
+              console.info(performance.navigation.type);
+            if (performance.navigation.type == performance.navigation.TYPE_RELOAD) {
+                console.info( "This page is reloaded" );
+                axios.post('/api/reload-board-all',room
+                    ).then(response => {
+                        console.log('OkSent');
                 });
-
+            }
+            else{
+                console.info( "This page is delete" );
+                window.addEventListener('unload', function () {
+                        // Đang thoát trang
+                        // Thực hiện các hành động khi trang được thoát
+                        axios.post('/api/reload-board',room
+                        ).then(response => {
+                            console.log('OkSent');
+                        });
+                   
+                });
+            }
+            window.addEventListener('popstate', function (event) {
+                axios.post('/api/reload-board',room
+                    ).then(response => {
+                        console.log('OkSent');
+                    });
+                // Thêm code xử lý khi người dùng thoát khỏi trang qua nút back ở đây
+            });
+            //thoát trang
+/*            window.addEventListener('beforeunload', function () {
+                if (isReloading) {
+                    isReloading = true;
+                    // Đang load lại trang
+                    // Thực hiện các hành động khi trang được load lại
+                } else {
+                    
+                    // Đang thoát trang
+                    // Thực hiện các hành động khi trang được thoát
+                    axios.post('/api/reload-board',room
+                    ).then(response => {
+                        console.log('OkSent');
+                    });
+                }
             });
 
            
 
-           /* window.addEventListener('load', function () {
+            window.addEventListener('beforeunload', function (event) {
+                // Kiểm tra điều kiện để xác định có đang load lại trang hay thoát trang
                 if (isReloading) {
-                    // Thực hiện các xử lý khi trang đã tải lại
-                    console.log('Trang đã được tải lại.');
-                    isReloading = false; // Đặt lại biến cờ
+                    // Đang load lại trang
+                    // Thực hiện các hành động khi trang được load lại
+                } else {
+                    // Đang thoát trang
+                    // Thực hiện các hành động khi trang được thoát
                 }
-            });*/
-
+            });
             
-           
-            
+    */       
             stompClient.connect({}, function (frame) {
                 console.log('WebSocket connection opened.');
                 // Đăng ký để lắng nghe tin nhắn từ topic "/topic/chessMove"
@@ -1903,6 +1940,18 @@
                         
                 });
 
+                stompClient.subscribe('/topic/reloadPage/' + room, function (message) {
+                    
+                    console.log(message.body);
+                    if(message.body === "Reloaded")
+                    {
+                        location.reload()
+                        stompClient.send("/topic/reloadPage/"+room, {}, null);
+                    }
+                    // Xử lý tin nhắn từ topic khác
+                    // ...
+            
+                });
                 
             
                 

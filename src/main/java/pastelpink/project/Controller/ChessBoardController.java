@@ -21,8 +21,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 
 import jakarta.servlet.http.HttpSession;
-import net.minidev.json.JSONArray;
-import net.minidev.json.JSONObject;
+
 import pastelpink.project.Model.ApiResponse;
 import pastelpink.project.Model.ChessMoveNodeModel;
 import pastelpink.project.Model.ChessNode;
@@ -139,6 +138,10 @@ public class ChessBoardController {
                     return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(new ApiResponse(false, "Không phải turn của bạn", null, null));
                 }
             }
+            else
+            {
+                 return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(new ApiResponse(false, "Người xem ngậm mọe mồm vào", null, null));
+            }
 
             
             // Gọi hàm gửi thông điệp tới client ở đây (sử dụng WebSocket hoặc một cơ chế gửi thông điệp phù hợp)
@@ -162,18 +165,20 @@ public class ChessBoardController {
      {
         try{
             this.reloadPage = true;
-            System.out.println("Ok sent to room: "+idroom);
+            System.out.println("Ok done");
             //Xử lý -1 số lượng người tham gia + chuyển người chơi reload về trang chủ + Kết thúc ván đấu
             String nameOfMasterRoom = homeService.getRoomMaster(Integer.parseInt(idroom.trim()));
             homeService.outgame(Integer.parseInt(idroom.trim()));
             if(session.getAttribute("team").toString().equals("do"))
             {
                 session.removeAttribute("team");
+                session.removeAttribute("playeronRoom");
                 
             }
             else if(session.getAttribute("team").toString().equals("den"))
             {
                 session.removeAttribute("team");
+                session.removeAttribute("playeronRoom");
                 //Đen out thì kệ đen
             }
             if(session.getAttribute("user").toString().equals(nameOfMasterRoom))
@@ -181,6 +186,23 @@ public class ChessBoardController {
                 //Nếu người out là chủ phòng, xóa phòng
                 homeService.stopgame(Integer.parseInt(idroom.trim()));
             }
+            return ResponseEntity.ok().body(new ApiResponse(true, "",null,null));       
+        }catch (Exception e) {
+            e.printStackTrace();
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(new ApiResponse(false, "Lỗi: "+ e.getMessage(), null, null));
+        }
+
+        
+     }
+
+     @PostMapping("/reload-board-all")
+     public ResponseEntity<Object> reloadall(HttpSession session,@RequestBody String idroom)
+     {
+        try{
+            this.reloadPage = true;
+            System.out.println("Ok sent to room: "+idroom);
+            //Xử lý -1 số lượng người tham gia + chuyển người chơi reload về trang chủ + Kết thúc ván đấu
+             messagingTemplate.convertAndSend("/topic/reloadPage/"+idroom, "Reloaded");
             return ResponseEntity.ok().body(new ApiResponse(true, "",null,null));       
         }catch (Exception e) {
             e.printStackTrace();
