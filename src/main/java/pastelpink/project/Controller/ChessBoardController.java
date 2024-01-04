@@ -173,7 +173,7 @@ public class ChessBoardController {
             else if(session.getAttribute("team").toString().equals("den"))
             {
                 session.removeAttribute("team");
-                homeService.stopgame(Integer.parseInt(idroom.trim()));
+                //Đen out thì kệ đen
             }
             return ResponseEntity.ok().body(new ApiResponse(true, "",null,null));       
         }catch (Exception e) {
