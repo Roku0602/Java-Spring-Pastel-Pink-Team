@@ -164,16 +164,22 @@ public class ChessBoardController {
             this.reloadPage = true;
             System.out.println("Ok sent to room: "+idroom);
             //Xử lý -1 số lượng người tham gia + chuyển người chơi reload về trang chủ + Kết thúc ván đấu
+            String nameOfMasterRoom = homeService.getRoomMaster(Integer.parseInt(idroom.trim()));
             homeService.outgame(Integer.parseInt(idroom.trim()));
             if(session.getAttribute("team").toString().equals("do"))
             {
                 session.removeAttribute("team");
-                homeService.stopgame(Integer.parseInt(idroom.trim()));
+                
             }
             else if(session.getAttribute("team").toString().equals("den"))
             {
                 session.removeAttribute("team");
                 //Đen out thì kệ đen
+            }
+            if(session.getAttribute("user").toString().equals(nameOfMasterRoom))
+            {
+                //Nếu người out là chủ phòng, xóa phòng
+                homeService.stopgame(Integer.parseInt(idroom.trim()));
             }
             return ResponseEntity.ok().body(new ApiResponse(true, "",null,null));       
         }catch (Exception e) {

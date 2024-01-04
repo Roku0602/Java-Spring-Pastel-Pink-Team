@@ -68,4 +68,10 @@ public class HomeService {
         room_detailRepository.deleteById(soluong.getId());
         
     }
+    public String getRoomMaster(int id)
+    {
+         Room_detail soluong = room_detailRepository.findAll().stream().filter(s -> s.getRoomid().getIdRoom() == id).findFirst().get();
+         String nameMaster = soluong.getUserid().getEmail();
+         return nameMaster;
+    }
 }
