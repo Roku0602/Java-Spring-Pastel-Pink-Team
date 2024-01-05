@@ -8,6 +8,17 @@
 <body>
 <th:block th:replace="~{layout::header}"></th:block>
 <div layout:fragment="content" class="container">
+  <div id="popup" class="popup">
+    <div class="popup-content">
+        <span th:onclick="closePopup()" class="close">&times;</span>
+        <form th:action="@{/rooms/add}" method="post">
+          <label for="inputText">Nhập ký tự:</label>
+          <input type="text" id="inputText" name="inputText">
+          <button type="submit">OK</button>
+        </form>
+    </div>
+  </div>
+ 
   <table class="table">
     <tr>
       <th>ID</th>
@@ -32,3 +43,13 @@
 <th:block th:replace="~{layout::footer}"></th:block>
 </body>
 </html>
+<script>
+  document.getElementById('popup').style.display = 'none';
+ 
+  function closePopup() {
+    document.getElementById('popup').style.display = 'none';
+  }
+  document.getElementById("addnew").onclick = function(event) {
+    document.getElementById('popup').style.display = 'block';
+  };
+</script>

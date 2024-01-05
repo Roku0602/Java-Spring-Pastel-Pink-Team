@@ -23,7 +23,7 @@ lang="en">
                         <a id="home" class="nav-link" href="/">Home</a>
                     </li>
                     <li th:if="${session.playeronRoom == null && session.user != null}" class="nav-item">
-                        <a class="nav-link" href="/rooms/add">Tạo phòng</a>
+                        <a class="nav-link" href="#" id="addnew">Tạo phòng</a>
                     </li>
                     <li th:if="${session.user != null}">
                         <form th:action="@{/logout}" method="post">
@@ -38,6 +38,7 @@ lang="en">
         </nav>
     </div>
 </header>
+
 <div th:insert="~{::${content}}">
 
 </div>

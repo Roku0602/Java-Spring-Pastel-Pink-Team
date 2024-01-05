@@ -11,6 +11,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
@@ -37,10 +38,14 @@ public class HomeController {
         return "Home/index.html";
     }
 
-    @GetMapping("/rooms/add")
-    public String AddNewRoom(HttpSession session,Model model)
+    @PostMapping("/rooms/add")
+    public String AddNewRoom(HttpSession session,Model model,@RequestParam("inputText") String pass)
     {
-        
+        int idroom = homeService.AddNewRoom(session.getAttribute("user").toString(), pass);
+        if(idroom != 0)
+        {
+             return "redirect:/play/start/"+idroom;
+        }
         return "redirect:/";
     }
     
