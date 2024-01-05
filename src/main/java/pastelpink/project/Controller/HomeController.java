@@ -96,4 +96,19 @@ public class HomeController {
         }
         
     }
+
+    @PostMapping("typePass/{id}")
+    public String JoinRoomWithPass(HttpSession session,Model model,@RequestParam("inputText") String pass,@PathVariable("id") int idRoom)
+    {
+        int result = homeService.CheckpassRoomIsRight(idRoom,pass);
+        if(result == 1)
+        {
+            return "redirect:/play/start/"+idRoom;
+        }
+        else
+        {
+            return "redirect:/";
+        }
+        
+    }
 }

@@ -8,11 +8,41 @@
 <body>
 <th:block th:replace="~{layout::header}"></th:block>
 <div layout:fragment="content" class="container">
+  <style>
+    .popup {
+      display: none;
+      position: fixed;
+      top: 20%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      border: 1px solid #ccc;
+      padding: 15px;
+      background-color: #fff;
+      z-index: 1;
+  }
+  
+  .popup-content {
+      display: flex;
+      flex-direction: column;
+  }
+  
+  .close {
+      color: #aaa;
+      float: right;
+      font-size: 20px;
+      font-weight: bold;
+      cursor: pointer;
+  }
+  
+  .close:hover {
+      color: black;
+  }
+  </style>
   <div id="popup" class="popup">
     <div class="popup-content">
         <span th:onclick="closePopup()" class="close">&times;</span>
         <form th:action="@{/rooms/add}" method="post">
-          <label for="inputText">Nhập ký tự:</label>
+          <label for="inputText">Tạo mật khẩu phòng (hoặc để rỗng):</label>
           <input type="text" id="inputText" name="inputText">
           <button type="submit">OK</button>
         </form>
@@ -34,8 +64,20 @@
       <td th:text="${list.Userid.Ten}"></td>
       <td th:text="${list.SoLuong}"></td>
       <td th:text="${list.NgayTao}"></td>
-      <td>
-        <a th:href="@{/play/start/{id} (id=${list.Roomid.IdRoom})}">Tham gia</a>
+      <td >
+        <a th:if="${list.Roomid.RoomPassword == null or list.Roomid.RoomPassword == ''}" th:href="@{/play/start/{id} (id=${list.Roomid.IdRoom})}">Tham gia</a>
+        <a th:else> </a>
+        <a th:if="${list.Roomid.RoomPassword != null and list.Roomid.RoomPassword != ''}" href="#" id="join-with-pass">Tham gia</a>
+        <div id="popupjoin" class="popup">
+          <div class="popup-content">
+              <span th:onclick="closePopupJoin()" class="close">&times;</span>
+              <form th:action="@{typePass/{id} (id=${list.Roomid.IdRoom})}" method="post">
+                <label for="inputText">Nhập mật khẩu:</label>
+                <input type="text" id="inputText" name="inputText">
+                <button type="submit">OK</button>
+              </form>
+          </div>
+        </div>
       </td>
     </tr>
   </table>
@@ -51,5 +93,13 @@
   }
   document.getElementById("addnew").onclick = function(event) {
     document.getElementById('popup').style.display = 'block';
+  };
+  
+  document.getElementById('popupjoin').style.display = 'none';
+  function closePopupJoin() {
+    document.getElementById('popupjoin').style.display = 'none';
+  }
+  document.getElementById("join-with-pass").onclick = function(event) {
+    document.getElementById('popupjoin').style.display = 'block';
   };
 </script>

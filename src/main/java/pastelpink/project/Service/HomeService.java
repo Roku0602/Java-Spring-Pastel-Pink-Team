@@ -122,4 +122,17 @@ public class HomeService {
             return 0;
         }
     }
+
+    public int CheckpassRoomIsRight(int id,String pass)
+    {
+        Rooms checkPassword = roomsRepository.findAll().stream().filter(c -> c.getIdRoom() == id).findFirst().get();
+        if(checkPassword.getRoomPassword().toString().trim().equals(pass.toString().trim()))
+        {
+            return 1;
+        } 
+        else
+        {
+            return 0;
+        }
+    }
 }
