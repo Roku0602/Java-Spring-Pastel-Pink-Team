@@ -27,7 +27,8 @@ lang="en">
                     </li>
                     <li th:if="${session.user != null}">
                         <form th:action="@{/logout}" method="post">
-                            <button class="btn btn-outline-danger" href="/login" type="submit">Logout</button> </form>
+                            <button class="btn btn-outline-danger" id="logout" type="submit">Logout</button> 
+                        </form>
                     </li>
                     <li th:if="${session.user == null}">
                         <a class="btn btn-outline-primary" href="/login">Login</a> </li>
