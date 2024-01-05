@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.core.io.Resource;
 import org.springframework.data.repository.query.Param;
+import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -24,6 +25,9 @@ public class HomeController {
 
     @Autowired
     HomeService homeService;
+
+    @Autowired
+    private SimpMessagingTemplate messagingTemplate;
 
     @GetMapping("/")
     public String Home(HttpSession session,Model model)
@@ -62,12 +66,14 @@ public class HomeController {
                             session.setAttribute("team", "den");
                             homeService.updateRoomPlayerCount(id);
                             session.setAttribute("playeronRoom", id);
+                            messagingTemplate.convertAndSend("/topic/reloadPage/"+id, "Reloaded");
                         }
                         else if(countplayer.getSoLuong() == 0 || countplayer.getSoLuong() == null)
                         {   
                             session.setAttribute("team", "do");
                             homeService.updateRoomPlayerCount(id);
                             session.setAttribute("playeronRoom", id);
+                            messagingTemplate.convertAndSend("/topic/reloadPage/"+id, "Reloaded");
                         }
                 }
                 

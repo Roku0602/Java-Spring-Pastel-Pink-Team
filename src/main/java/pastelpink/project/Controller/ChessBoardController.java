@@ -181,7 +181,7 @@ public class ChessBoardController {
                 session.removeAttribute("playeronRoom");
                 //Đen out thì kệ đen
             }
-            if(session.getAttribute("user").toString().equals(nameOfMasterRoom))
+            if(session.getAttribute("user").toString().trim().equals(nameOfMasterRoom.trim().toString()))
             {
                 //Nếu người out là chủ phòng, xóa phòng
                 homeService.stopgame(Integer.parseInt(idroom.trim()));
