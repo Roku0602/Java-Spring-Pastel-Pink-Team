@@ -41,10 +41,14 @@
   <div id="popup" class="popup">
     <div class="popup-content">
         <span th:onclick="closePopup()" class="close">&times;</span>
-        <form th:action="@{/rooms/add}" method="post">
+        <form th:action="@{/rooms/add}" method="post" enctype="multipart/form-data">
           <label for="inputText">Tạo mật khẩu phòng (hoặc để rỗng):</label>
-          <input type="text" id="inputText" name="inputText">
-          <button type="submit">OK</button>
+          <input type="text" id="inputText" name="inputText" onchange="checkFileInput()">
+        </br>
+          <label for="fileInput">Chọn file:</label>
+          <input type="file" id="fileInput" name="fileInput" onchange="checkFileInput()"> 
+        </br>
+          <button type="submit" id="submitbutt">Xác nhận</button>
         </form>
     </div>
   </div>
@@ -71,10 +75,14 @@
         <div id="popupjoin" class="popup">
           <div class="popup-content">
               <span th:onclick="closePopupJoin()" class="close">&times;</span>
-              <form th:action="@{typePass/{id} (id=${list.Roomid.IdRoom})}" method="post">
-                <label for="inputText">Nhập mật khẩu:</label>
-                <input type="text" id="inputText" name="inputText">
-                <button type="submit">OK</button>
+              <form th:action="@{typePass/{id} (id=${list.Roomid.IdRoom})}" method="post" enctype="multipart/form-data" >
+                  <label for="inputText">Nhập mật khẩu:</label>
+                  <input type="text" id="inputText" name="inputText" onchange="checkFileInput()">
+                </br>
+                  <label for="fileInput">Chọn file:</label>
+                  <input type="file" id="fileInput" name="fileInput" onchange="checkFileInput()">
+                </br>
+                  <button type="submit" id="submitbutton">Tham gia</button>
               </form>
           </div>
         </div>
@@ -102,4 +110,28 @@
   document.getElementById("join-with-pass").onclick = function(event) {
     document.getElementById('popupjoin').style.display = 'block';
   };
+
+  function checkFileInput() {
+    var fileInput = document.getElementById('fileInput');
+    var inputText = document.getElementById('inputText');
+    var submitButton = document.getElementById('submitbutt');
+    var submitButtonJoin = document.getElementById('submitbutton');
+
+    if (fileInput.files.length > 0 && inputText.value.trim() === '') {
+      alert('Vui lòng nhập mật khẩu phòng khi trước khi tạo phòng chơi tiếp tục ván cũ');
+        submitButton.disabled = true;
+        if(submitButtonJoin != null)
+        {
+          submitButtonJoin.disabled = true;
+        }
+        
+    } else {
+      if(submitButtonJoin != null)
+      {
+        submitButtonJoin.disabled = false;
+      }
+        submitButton.disabled = false;
+    }
+  }
+
 </script>

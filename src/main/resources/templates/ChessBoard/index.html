@@ -2,6 +2,7 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.19.0/axios.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/sockjs-client/1.5.0/sockjs.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/stomp.js/2.3.3/stomp.min.js"></script>
+<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
@@ -44,6 +45,7 @@
     </div>
     <!--Chat-->
     <div layout:fragment="content" class="container">
+        <button id="btndownboard" class="btn btn-outline-danger">Tải xuống bàn cờ</button>
         <div class="row p-1">
             <div class="col-1">User</div>
             <div class="col-5"><input type="text" id="userInput" th:value="${session.playername}" readonly="readonly" /></div>
@@ -72,8 +74,66 @@
 </body>
 </html>
 <script th:src="@{/js/chat.js}"></script>
+
 <script th:inline="javascript">
-   
+    function downloadCoordinatesFile(jsonData) {
+        // Tạo một đối tượng Blob từ mảng JSON
+        var blob = new Blob([JSON.stringify(jsonData, null, 2)], { type: 'application/json' });
+    
+        // Tạo một đường dẫn URL từ đối tượng Blob
+        var url = window.URL.createObjectURL(blob);
+    
+        // Tạo một thẻ a để tạo sự kiện click và tải xuống
+        var link = document.createElement('a');
+        link.href = url;
+        link.download = 'chessHistory.json';
+    
+        // Thêm thẻ a vào body
+        document.body.appendChild(link);
+    
+        // Tự động kích hoạt sự kiện click trên thẻ a để tải xuống
+        link.click();
+    
+        // Sau khi tải xuống, loại bỏ thẻ a khỏi body để tránh làm rác
+        document.body.removeChild(link);
+    
+        console.log("Downloaded");
+    }
+    
+    $(document).on('click', '#btndownboard', function () {
+        console.log('Button clicked!');
+        // Thêm code xử lý download hoặc các hành động khác tại đây
+    
+        var objectContainer = $('.chessnode'); // Sử dụng class thay vì id
+        var jsonData = [];
+    
+        objectContainer.each(function () {
+            var chessNode = $(this);
+            var objectId = chessNode.attr('id');
+            var coordinates = chessNode.position();
+            var chessImgNode = chessNode.find('.chessimgnode');
+            var imagePath = chessImgNode.attr('src');
+    
+            // Chuyển đổi giá trị top và left thành số nguyên
+            var topValue = parseInt(coordinates.top, 10);
+            var leftValue = parseInt(coordinates.left, 10);
+            var imageName = imagePath.substring(imagePath.lastIndexOf('/images') + '/images'.length);
+    
+            var jsonCoordinates = {
+                id: objectId,
+                src: imageName,
+                top: topValue,
+                left: leftValue,
+                visible: "inline",
+            };
+    
+            jsonData.push(jsonCoordinates);
+        });
+    
+        downloadCoordinatesFile(jsonData);
+    });
+    
+    
     var matrix = [];
     var currentPlayer;
     var app = new Vue({
@@ -1957,6 +2017,11 @@
                     if(message.body === "Reloaded")
                     {
                         location.reload()
+                        stompClient.send("/topic/reloadPage/"+room, {}, null);
+                    }
+                    else if(message.body === "ReloadedWith")
+                    {
+                        this.getChessNode();
                         stompClient.send("/topic/reloadPage/"+room, {}, null);
                     }
                     // Xử lý tin nhắn từ topic khác

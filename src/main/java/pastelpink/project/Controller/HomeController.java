@@ -1,5 +1,7 @@
 package pastelpink.project.controller;
 
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,6 +16,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 
 import jakarta.servlet.http.HttpSession;
 import pastelpink.project.Entity.Room_detail;
@@ -39,11 +42,35 @@ public class HomeController {
     }
 
     @PostMapping("/rooms/add")
-    public String AddNewRoom(HttpSession session,Model model,@RequestParam("inputText") String pass)
+    public String AddNewRoom(HttpSession session, Model model, @RequestParam("inputText") String pass, @RequestParam("fileInput") MultipartFile file)
     {
         int idroom = homeService.AddNewRoom(session.getAttribute("user").toString(), pass);
         if(idroom != 0)
         {
+            // Tên file gốc
+            if(file != null && !file.isEmpty())
+            {
+                String originalFilename = file.getOriginalFilename();
+                // Loại bỏ số đuôi từ tên file
+                String fileNameWithoutExtension = homeService.removeNumberAndExtension(originalFilename);
+                fileNameWithoutExtension = fileNameWithoutExtension+".json";
+                System.out.println("file la:"+fileNameWithoutExtension.toString());
+                try
+                {
+                    
+                    Path filePath = Paths.get("static/Data/", fileNameWithoutExtension);
+                    // Lưu đường dẫn vào session
+                    session.setAttribute("filetoLoadPath", filePath.toString());
+                    // Lưu file vào đường dẫn đã xác định
+                    
+                    file.transferTo(filePath.toFile());
+                }
+                catch(Exception ex)
+                {
+                    System.out.println("notgood");
+                }
+            }
+            
              return "redirect:/play/start/"+idroom;
         }
         return "redirect:/";
@@ -98,11 +125,34 @@ public class HomeController {
     }
 
     @PostMapping("typePass/{id}")
-    public String JoinRoomWithPass(HttpSession session,Model model,@RequestParam("inputText") String pass,@PathVariable("id") int idRoom)
+    public String JoinRoomWithPass(HttpSession session,Model model,@RequestParam("inputText") String pass,@PathVariable("id") int idRoom,@RequestParam("fileInput") MultipartFile file)
     {
+        System.out.println(pass+" idroom: "+idRoom);
         int result = homeService.CheckpassRoomIsRight(idRoom,pass);
         if(result == 1)
         {
+            // Tên file gốc
+            if(file != null && !file.isEmpty())
+            {
+                String originalFilename = file.getOriginalFilename();
+                // Loại bỏ số đuôi từ tên file
+                String fileNameWithoutExtension = homeService.removeNumberAndExtension(originalFilename);
+                fileNameWithoutExtension = fileNameWithoutExtension+".json";
+                System.out.println("file la:"+fileNameWithoutExtension.toString());
+                try
+                {
+                    Path filePath = Paths.get("static/Data/", fileNameWithoutExtension);
+                    // Lưu đường dẫn vào session
+                    session.setAttribute("filetoLoadPath", filePath.toString());
+                    // Lưu file vào đường dẫn đã xác định
+                    
+                    file.transferTo(filePath.toFile());
+                }
+                catch(Exception ex)
+                {
+                    System.out.println("notgood");
+                }
+            }
             return "redirect:/play/start/"+idRoom;
         }
         else

@@ -128,6 +128,7 @@ public class HomeService {
         Rooms checkPassword = roomsRepository.findAll().stream().filter(c -> c.getIdRoom() == id).findFirst().get();
         if(checkPassword.getRoomPassword().toString().trim().equals(pass.toString().trim()))
         {
+            System.out.println(checkPassword.getRoomPassword().toString().trim()+"pass input: "+pass.toString().trim());
             return 1;
         } 
         else
@@ -135,4 +136,22 @@ public class HomeService {
             return 0;
         }
     }
+
+    public String removeNumberAndExtension(String fileName) {
+        // Xóa số cuối cùng trong tên file và đuôi file (nếu có)
+        int lastOpenParenIndex = fileName.lastIndexOf("(");
+        int lastCloseParenIndex = fileName.lastIndexOf(")");
+        int lastDotIndex = fileName.lastIndexOf(".");
+        
+        if (lastOpenParenIndex > 0 && lastCloseParenIndex > lastOpenParenIndex) {
+            fileName = fileName.substring(0, Math.min(lastOpenParenIndex, fileName.length())).trim();
+        }
+        
+        if (lastDotIndex > 0) {
+            fileName = fileName.substring(0, Math.min(lastDotIndex, fileName.length()));
+        }
+        
+        return fileName;
+    }
+    
 }

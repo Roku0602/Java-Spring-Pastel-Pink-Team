@@ -55,13 +55,21 @@ public class ChessBoardController {
 
     @GetMapping("/getChessBoard")
     public ResponseEntity<Object> getChessBoard(HttpSession session) {
-        try {
-             Resource resource = new ClassPathResource("static/Data/ChessJson.txt");
-                // Góc xoay cho đội 1 hoặc đội trắng
-            int angleForTeam1 = 0;
 
-            // Góc xoay cho đội 2 hoặc đội đen
-            int angleForTeam2 = 180;
+        try {
+            Resource resource;
+            if(session.getAttribute("filetoLoadPath") != null)
+            {
+                System.out.println(session.getAttribute("filetoLoadPath").toString());
+                String pathgame = session.getAttribute("filetoLoadPath").toString().trim();
+                
+                resource = new ClassPathResource(pathgame);
+            }
+            else
+            {   
+                resource = new ClassPathResource("static/Data/ChessJson.txt");
+            }
+             
            
             // Resource resource = new ClassPathResource("static/Data/ChessJson.txt");
             String filePath = resource.getFile().getAbsolutePath();
@@ -70,10 +78,7 @@ public class ChessBoardController {
             
             ObjectMapper objectMapper = new ObjectMapper();
             List<ChessNode> chessNodeList = objectMapper.readValue(chessJson, new TypeReference<List<ChessNode>>() {});
-            if(session.getAttribute("team") != null)
-            {
-                chessBoardService.rotateChessNodes(chessNodeList, angleForTeam1, angleForTeam2,session.getAttribute("team").toString());
-            }
+           
             
             String chessCheck = String.valueOf(chessNodeList);
             System.out.println("dữ liệu: "  + chessCheck);
@@ -173,12 +178,14 @@ public class ChessBoardController {
             {
                 session.removeAttribute("team");
                 session.removeAttribute("playeronRoom");
+                session.removeAttribute("filetoLoadPath");
                 
             }
             else if(session.getAttribute("team").toString().equals("den"))
             {
                 session.removeAttribute("team");
                 session.removeAttribute("playeronRoom");
+                session.removeAttribute("filetoLoadPath");
                 //Đen out thì kệ đen
             }
             if(session.getAttribute("user").toString().trim().equals(nameOfMasterRoom.trim().toString()))
@@ -199,10 +206,21 @@ public class ChessBoardController {
      public ResponseEntity<Object> reloadall(HttpSession session,@RequestBody String idroom)
      {
         try{
-            this.reloadPage = true;
-            System.out.println("Ok sent to room: "+idroom);
-            //Xử lý -1 số lượng người tham gia + chuyển người chơi reload về trang chủ + Kết thúc ván đấu
-             messagingTemplate.convertAndSend("/topic/reloadPage/"+idroom, "Reloaded");
+            if(session.getAttribute("filetoLoadPath") != null)
+            {
+                this.reloadPage = true;
+                System.out.println("Ok sent to room: "+idroom);
+                //Xử lý -1 số lượng người tham gia + chuyển người chơi reload về trang chủ + Kết thúc ván đấu
+                messagingTemplate.convertAndSend("/topic/reloadPage/"+idroom, "ReloadedWith");
+            }
+            else
+            {
+                this.reloadPage = true;
+                System.out.println("Ok sent to room: "+idroom);
+                //Xử lý -1 số lượng người tham gia + chuyển người chơi reload về trang chủ + Kết thúc ván đấu
+                messagingTemplate.convertAndSend("/topic/reloadPage/"+idroom, "Reloaded");
+            }
+           
             return ResponseEntity.ok().body(new ApiResponse(true, "",null,null));       
         }catch (Exception e) {
             e.printStackTrace();
