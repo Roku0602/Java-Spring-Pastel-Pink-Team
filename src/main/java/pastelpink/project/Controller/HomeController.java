@@ -124,8 +124,8 @@ public class HomeController {
         
     }
 
-    @PostMapping("typePass/{id}")
-    public String JoinRoomWithPass(HttpSession session,Model model,@RequestParam("inputText") String pass,@PathVariable("id") int idRoom,@RequestParam("fileInput") MultipartFile file)
+    @PostMapping("/typePass/{idroom}")
+    public String JoinRoomWithPass(HttpSession session,Model model,@RequestParam("inputText") String pass,@PathVariable("idroom") int idRoom,@RequestParam("fileInput") MultipartFile file)
     {
         System.out.println(pass+" idroom: "+idRoom);
         int result = homeService.CheckpassRoomIsRight(idRoom,pass);
