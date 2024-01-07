@@ -18,7 +18,6 @@ public class AccountService {
 
     public int Login(String username, String pass)
     {
-        BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
         String md5Hash = DigestUtils.md5Hex(pass.trim());
         User checkLoginUser = userRepository.getUserByEmail(username, md5Hash);
         if(checkLoginUser == null)
@@ -59,6 +58,25 @@ public class AccountService {
         else
         {
             return 0;
+        }
+    }
+
+    public int SignUpAccount(String email, String name, String pass)
+    {
+        User u = userRepository.findAll().stream().filter(q-> q.getEmail().toString().trim().equals(email.toString().trim())).findFirst().orElse(null);
+        if(u != null)
+        {
+            return 0;
+        }
+        else
+        {
+            User newUser = new User();
+            String md5Hash = DigestUtils.md5Hex(pass.trim());
+            newUser.setEmail(email);
+            newUser.setIdGoogle(null);
+            newUser.setPassword(md5Hash);
+            userRepository.save(newUser);
+            return 1;
         }
     }
 }

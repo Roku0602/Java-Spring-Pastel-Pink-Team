@@ -71,8 +71,8 @@
       <td >
         <a th:if="${list.Roomid.RoomPassword == null or list.Roomid.RoomPassword == ''}" th:href="@{/play/start/{id} (id=${list.Roomid.IdRoom})}">Tham gia</a>
         <a th:else> </a>
-        <div th:if="${list.Roomid.RoomPassword != null and list.Roomid.RoomPassword != ''}" href="#" id="join-with-pass">Tham gia
-          <div id="popupjoin" class="popup">
+        <div th:if="${list.Roomid.RoomPassword != null and list.Roomid.RoomPassword != ''}" href="#" th:onclick="'JoinRoomOnClick(\'' + ${list.Roomid.IdRoom} + '\')'">Tham gia
+          <div th:id="'popupjoin-'+${list.Roomid.IdRoom}" class="popup">
             <div class="popup-content">
                 <span type="submit" th:onclick="closePopupJoin()" class="close">&times;</span>
                 <form th:action="@{typePass/{id} (id=${list.Roomid.IdRoom})}" method="post" enctype="multipart/form-data" >
@@ -105,34 +105,35 @@
     document.getElementById('popup').style.display = 'block';
   };
   
-  document.getElementById('popupjoin').style.display = 'none';
   
   function closePopupJoin() {
     location.reload();
   }
-  document.getElementById("join-with-pass").onclick = function(event) {
-    document.getElementById('popupjoin').style.display = 'block';
+  function JoinRoomOnClick(id) {
+    console.log(id);
+    var buttonId = 'popupjoin-' + id;
+    document.getElementById(buttonId).style.display = 'block';
   };
 
   function checkFileInput() {
     var fileInput = document.getElementById('fileInput');
     var inputText = document.getElementById('inputText');
     var submitButton = document.getElementById('submitbutt');
-    var submitButtonJoin = document.getElementById('submitbutton');
+    //var submitButtonJoin = document.getElementById('submitbutton');
 
     if (fileInput.files.length > 0 && inputText.value.trim() === '') {
       alert('Vui lòng nhập mật khẩu phòng khi trước khi tạo phòng chơi tiếp tục ván cũ');
         submitButton.disabled = true;
-        if(submitButtonJoin != null)
+        /*if(submitButtonJoin != null)
         {
           submitButtonJoin.disabled = true;
-        }
+        }*/
         
     } else {
-      if(submitButtonJoin != null)
+      /*if(submitButtonJoin != null)
       {
         submitButtonJoin.disabled = false;
-      }
+      }*/
         submitButton.disabled = false;
     }
   }

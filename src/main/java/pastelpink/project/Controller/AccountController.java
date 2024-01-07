@@ -31,6 +31,11 @@ public class AccountController {
         return "Account/login.html";
     }
 
+    @GetMapping("/signUp")
+    public String DangKy() {
+        return "Account/signup.html";
+    }
+
     // @GetMapping("/GoogleLogin")
     //  public String LoginGoogle() {
     //     return "Account/loginGoogle"; // Trả về tên của view
@@ -62,6 +67,23 @@ public class AccountController {
         }
         
          return "redirect:/";
+    }
+
+    @PostMapping("/signup")
+    public String Signupfunc(Model model,@RequestParam(name = "fullname") String name,
+            @RequestParam(name = "password") String mk, HttpSession session,@RequestParam("email") String mail) 
+    {
+        System.out.println(mail+"tên: "+name+" pass: "+mk);
+        int result = accountService.SignUpAccount(mail, name, mk);
+        if(result == 1)
+        {
+            return "redirect:/login";    
+        }
+        else
+        {
+            return "redirect:/signUp";  
+        }
+        
     }
 
     //  @GetMapping("/LoginGoogleSuccess")
