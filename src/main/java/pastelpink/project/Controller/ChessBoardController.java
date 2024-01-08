@@ -191,6 +191,7 @@ public class ChessBoardController {
             if(session.getAttribute("user").toString().trim().equals(nameOfMasterRoom.trim().toString()))
             {
                 //Nếu người out là chủ phòng, xóa phòng
+                session.removeAttribute("masterroom");
                 homeService.stopgame(Integer.parseInt(idroom.trim()));
             }
             return ResponseEntity.ok().body(new ApiResponse(true, "",null,null));       

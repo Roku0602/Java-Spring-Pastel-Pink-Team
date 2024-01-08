@@ -93,6 +93,13 @@ public class HomeController {
                 }
                 else
                 {
+                    String nameOfMasterRoom = homeService.getRoomMaster(id);
+                    if(session.getAttribute("user").toString().trim().equals(nameOfMasterRoom.trim().toString()))
+                    {
+                        //Nếu người out là chủ phòng, xóa phòng
+                        session.setAttribute("masterroom",nameOfMasterRoom);
+                        
+                    }
                     if(countplayer.getSoLuong() < 2 && countplayer.getSoLuong() > 0)
                         {
                             session.setAttribute("team", "den");

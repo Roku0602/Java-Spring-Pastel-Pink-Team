@@ -45,7 +45,8 @@
     </div>
     <!--Chat-->
     <div layout:fragment="content" class="container">
-        <button id="btndownboard" class="btn btn-outline-danger">Tải xuống bàn cờ</button>
+        <!--Chỉ chủ phòng được down bàn cờ-->
+        <button th:if="${session.masterroom != null}" id="btndownboard" class="btn btn-outline-danger">Tải xuống bàn cờ</button>
         <div class="row p-1">
             <div class="col-1">User</div>
             <div class="col-5"><input type="text" id="userInput" th:value="${session.playername}" readonly="readonly" /></div>
@@ -77,6 +78,18 @@
 
 <script th:inline="javascript">
     function downloadCoordinatesFile(jsonData) {
+        // Lấy thông tin về thời gian hiện tại
+        var currentDate = new Date();
+        
+        // Tạo chuỗi thời gian DMYHMI
+        var timestamp = currentDate.toLocaleDateString('en-GB', {
+            day: 'numeric',
+            month: 'numeric',
+            year: 'numeric',
+            hour: 'numeric',
+            minute: 'numeric',
+            second: 'numeric'
+        }).replace(/[/\s:]/g, ''); // Loại bỏ dấu /, khoảng trắng và dấu :
         // Tạo một đối tượng Blob từ mảng JSON
         var blob = new Blob([JSON.stringify(jsonData, null, 2)], { type: 'application/json' });
     
@@ -86,7 +99,7 @@
         // Tạo một thẻ a để tạo sự kiện click và tải xuống
         var link = document.createElement('a');
         link.href = url;
-        link.download = 'chessHistory.json';
+        link.download = timestamp+'chessHistory.json';
     
         // Thêm thẻ a vào body
         document.body.appendChild(link);
@@ -108,6 +121,7 @@
         var jsonData = [];
     
         objectContainer.each(function () {
+           
             var chessNode = $(this);
             var objectId = chessNode.attr('id');
             var coordinates = chessNode.position();
@@ -115,16 +129,17 @@
             var imagePath = chessImgNode.attr('src');
     
             // Chuyển đổi giá trị top và left thành số nguyên
-            var topValue = parseInt(coordinates.top, 10);
-            var leftValue = parseInt(coordinates.left, 10);
+            var topValue = parseInt(chessNode.css('top').replace('px', ''), 10);
+            var leftValue = parseInt(chessNode.css('left').replace('px', ''), 10);;
             var imageName = imagePath.substring(imagePath.lastIndexOf('/images') + '/images'.length);
+            var isVisible = chessNode.css('display');
     
             var jsonCoordinates = {
                 id: objectId,
                 src: imageName,
                 top: topValue,
                 left: leftValue,
-                visible: "inline",
+                visible: isVisible,
             };
     
             jsonData.push(jsonCoordinates);

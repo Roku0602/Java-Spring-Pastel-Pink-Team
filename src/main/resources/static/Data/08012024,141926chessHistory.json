@@ -65,14 +65,14 @@
   {
     "id": "phaodo1",
     "src": "/phaodo1.svg",
-    "top": 727,
+    "top": 209,
     "left": 180,
     "visible": "block"
   },
   {
     "id": "phaodo2",
     "src": "/phaodo2.svg",
-    "top": 209,
+    "top": 727,
     "left": 624,
     "visible": "block"
   },
@@ -179,14 +179,14 @@
     "src": "/maden1.svg",
     "top": 727,
     "left": 180,
-    "visible": "none"
+    "visible": "block"
   },
   {
     "id": "maden2",
     "src": "/maden2.svg",
     "top": 727,
     "left": 624,
-    "visible": "block"
+    "visible": "none"
   },
   {
     "id": "tuongden1",
