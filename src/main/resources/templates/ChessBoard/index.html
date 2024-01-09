@@ -14,60 +14,112 @@
 <body>
     <th:block th:replace="~{layout::header}"></th:block>
     <style>
-        .chessboard {
+        .chessboard 
+        {
             background-image: url("/images/bancotuong.jpg");
             width: 850px;
             height: 850px;
             position: absolute;
+            box-shadow: 0 7px 10px rgba(0, 0, 0, 0.1);
+            margin-left: 20px;
         }
     
-        .chessnode {
+        .chessnode 
+        {
             position: absolute;
             width: 50px;
             height: 50px;
         }
     
-        .chessimgnode {
+        .chessimgnode 
+        {
             width: 50px;
             height: 50px;
         }
-    </style>
-    <div layout:fragment="content" id="app" style="min-height:900px">
+
+        .chessboard-container
+        {
+            display: grid;
+            grid-template-columns: 1fr 2fr;
+            padding: 20px;
+            grid-gap: 30px;
+        }
         
-        <div class="chessboard">
-            <div v-for="item in chessNode" class="chessnode"
-                    v-on:dragstart="dragStart"
-                    v-on:dragend="dragEnd"
-                    :id="item.id" :style="{ display: item.visible, top: item.top + 'px', left: item.left + 'px' }">
-                    <img :src="'/images' + item.src" class="chessimgnode" />
+        .detail-container
+        {
+            box-shadow: 0 7px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .detail
+        {
+            padding: 20px;
+        }
+
+        .chat 
+        {
+            width: 300px;
+            padding: 10px;
+        }
+
+        .chat input[type="text"] 
+        {
+            width: calc(100% - 20px);
+            margin-bottom: 10px;
+            padding: 5px;
+        }
+        #sendButton 
+        {
+            padding: 8px 16px;
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: bold;
+        }
+          
+        #sendButton:hover 
+        {
+            background-color: #0056b3;
+        }
+          
+    </style>
+    <div class="chessboard-container">
+        <div layout:fragment="content" id="app" style="min-height:900px">
+            <div class="chessboard">
+                <div v-for="item in chessNode" class="chessnode"
+                        v-on:dragstart="dragStart"
+                        v-on:dragend="dragEnd"
+                        :id="item.id" :style="{ display: item.visible, top: item.top + 'px', left: item.left + 'px' }">
+                        <img :src="'/images' + item.src" class="chessimgnode" />
+                </div>
             </div>
         </div>
-    </div>
-    <!--Chat-->
-    <div layout:fragment="content" class="container">
-        <!--Chỉ chủ phòng được down bàn cờ-->
-        <button th:if="${session.masterroom != null}" id="btndownboard" class="btn btn-outline-danger">Tải xuống bàn cờ</button>
-        <div class="row p-1">
-            <div class="col-1">User</div>
-            <div class="col-5"><input type="text" id="userInput" th:value="${session.playername}" readonly="readonly" /></div>
-        </div>
-        <div class="row p-1">
-            <div class="col-1">Message</div>
-            <div class="col-5"><input type="text" class="w-100" id="messageInput" /></div>
-        </div>
-        <div class="row p-1">
-            <div class="col-6 text-end">
-                <input type="button" id="sendButton" value="Send Message" />
-            </div>
-        </div>
-        <div class="row p-1">
-            <div class="col-6">
-                <hr />
-            </div>
-        </div>
-        <div class="row p-1">
-            <div class="col-6">
-                <ul id="messagesList"></ul>
+        <!--Chat-->
+        <div style="max-width: 600px;" layout:fragment="content" class="container">
+            <div class="detail-container">
+                <div class="detail">
+                    <!--Chỉ chủ phòng được down bàn cờ-->
+                    <button th:if="${session.masterroom != null}" id="btndownboard" class="btn btn-outline-danger">Tải xuống bàn cờ</button>
+                    <div class="chat">
+                        <div>User  <input style="color: gray" type="text" id="userInput" th:value="${session.playername}" readonly="readonly" /></div>
+                        <div>Message  <input type="text" class="w-100" id="messageInput" /></div>
+                    </div>
+                    <div class="row p-1">
+                        <div>
+                            <input type="button" id="sendButton" value="Send Message" />
+                        </div>
+                    </div>
+                    <div class="row p-1">
+                        <hr/>
+                    </div>
+                    <div class="row p-1">
+                        <div class="col-6">
+                            <ul id="messagesList"></ul>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>

@@ -1,141 +1,284 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
-<head>
-  <meta charset="UTF-8">
-  <title>Chess List</title>
-  <th:block th:replace="~{layout::link-css}"></th:block>
-</head>
-<body>
-<th:block th:replace="~{layout::header}"></th:block>
-<div layout:fragment="content" class="container">
-  <style>
-    .popup {
-      display: none;
-      position: fixed;
-      top: 20%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-      border: 1px solid #ccc;
-      padding: 15px;
-      background-color: #fff;
-      z-index: 1;
-  }
-  
-  .popup-content {
-      display: flex;
-      flex-direction: column;
-  }
-  
-  .close {
-      color: #aaa;
-      float: right;
-      font-size: 20px;
-      font-weight: bold;
-      cursor: pointer;
-  }
-  
-  .close:hover {
-      color: black;
-  }
-  </style>
-  <div id="popup" class="popup">
-    <div class="popup-content">
-        <span th:onclick="closePopup()" class="close">&times;</span>
-        <form th:action="@{/rooms/add}" method="post" enctype="multipart/form-data">
-          <label for="inputText">Tạo mật khẩu phòng (hoặc để rỗng):</label>
-          <input type="text" id="inputText" name="inputText" onchange="checkFileInput()">
-        </br>
-          <label for="fileInput">Chọn file:</label>
-          <input type="file" id="fileInput" name="fileInput" onchange="checkFileInput()"> 
-        </br>
-          <button type="submit" id="submitbutt">Xác nhận</button>
-        </form>
-    </div>
-  </div>
- 
-  <table class="table">
-    <tr>
-      <th>ID</th>
-      <th>Room name</th>
-      <th>Người tạo</th>
-      <th>Số lượng người chơi</th>
-      <th>Ngày tạo</th>
-      <th>Tùy chọn</th>
-    </tr>
-    <tr th:each="list:${PlayerList}">
-      <td th:text="${list.Roomid.IdRoom}"></td>
-      <td th:text="${list.Roomid.TenPhong}"></td>
-      <td th:text="${list.Userid.Ten}"></td>
-      <td th:text="${list.SoLuong}"></td>
-      <td th:text="${list.NgayTao}"></td>
-      <td >
-        <a th:if="${list.Roomid.RoomPassword == null or list.Roomid.RoomPassword == ''}" th:href="@{/play/start/{id} (id=${list.Roomid.IdRoom})}">Tham gia</a>
-        <a th:else> </a>
-        <div th:if="${list.Roomid.RoomPassword != null and list.Roomid.RoomPassword != ''}" href="#" th:onclick="'JoinRoomOnClick(\'' + ${list.Roomid.IdRoom} + '\')'">Tham gia
-          <div th:id="'popupjoin-'+${list.Roomid.IdRoom}" class="popup">
-            <div class="popup-content">
-                <span type="submit" th:onclick="closePopupJoin()" class="close">&times;</span>
-                <form th:action="@{typePass/{id} (id=${list.Roomid.IdRoom})}" method="post" enctype="multipart/form-data" >
-                    <label for="inputText">Nhập mật khẩu:</label>
-                    <input type="text" id="inputText" name="inputText" onchange="checkFileInput()">
-                  </br>
-                    <label for="fileInput">Chọn file:</label>
-                    <input type="file" id="fileInput" name="fileInput" onchange="checkFileInput()">
-                  </br>
-                    <button type="submit" id="submitbutton">Tham gia</button>
-                </form>
-            </div>
-          </div>
-        </div>
-        
-      </td>
-    </tr>
-  </table>
-</div>
-<th:block th:replace="~{layout::footer}"></th:block>
-</body>
+	<head>
+		<meta charset="UTF-8">
+		<title>Chess List</title>
+		<th:block th:replace="~{layout::link-css}"></th:block>
+	</head>
+	<body>
+		<th:block th:replace="~{layout::header}"></th:block>
+		<div layout:fragment="content" class="container">
+			<style>
+				body
+				{
+					background-color: #F8F9FA;
+				}
+
+				.popup 
+				{
+					display: none;
+					position: fixed;
+					top: 20%;
+					left: 50%;
+					transform: translate(-50%, -50%);
+					border: 1px solid #ccc;
+					padding: 15px;
+					background-color: #fff;
+					z-index: 1;
+				}
+
+				.popup-content 
+				{
+					display: flex;
+					flex-direction: column;
+				}
+
+				.close 
+				{
+					color: #aaa;
+					float: right;
+					font-size: 20px;
+					font-weight: bold;
+					cursor: pointer;
+				}
+
+				.close:hover 
+				{
+					color: black;
+				}
+
+				.popup-content 
+				{
+					text-align: center;
+				}
+
+				.close 
+				{
+					float: right;
+					cursor: pointer;
+					font-size: 20px;
+					font-weight: bold;
+				}
+
+				label 
+				{
+					display: block;
+					margin-bottom: 5px;
+				}
+
+				input[type="text"],
+				input[type="file"],
+				button 
+				{
+					margin-bottom: 10px;
+					padding: 5px;
+				}
+
+				button 
+				{
+					background-color: #007bff;
+					color: #fff;
+					border: none;
+					padding: 8px 16px;
+					cursor: pointer;
+					border-radius: 0.25rem;
+				}
+
+				button:hover 
+				{
+					background-color: #0056b3;
+				}
+
+				th,td,a
+				{
+					font-weight: bold
+				}
+
+				table, th, td
+				{
+					border: none;
+				}
+
+				.join
+				{
+					cursor: pointer;
+				}
+
+				.table 
+				{
+					min-width: 1000px !important;
+					width: 100%;
+					border-collapse: separate;
+					border-spacing: 0 10px;
+				}
+
+				.table th,
+				.table td 
+				{
+					padding: 8px;
+					text-align: center;
+				}
+
+				.close 
+				{
+					float: right;
+					cursor: pointer;
+					font-size: 20px;
+					font-weight: bold;
+				}
+
+				label 
+				{
+					display: block;
+					margin-bottom: 5px;
+				}
+
+				input[type="text"],
+				input[type="file"],
+				button 
+				{
+					margin-bottom: 10px;
+					padding: 5px;
+				}
+
+				button 
+				{
+					background-color: #007bff;
+					color: #fff;
+					border: none;
+					padding: 8px 16px;
+					cursor: pointer;
+				}
+
+				.table-responsive
+				{
+					display: block;
+					overflow-x: auto;
+					width: 100%;
+					margin-top: 20px;
+					position: relative;
+					padding: 20px;
+					box-shadow: 0 7px 25px rgba(0, 0, 0, 0.08);
+					border-radius: 10px;
+					background-color: #F8F9FD;
+				}
+
+				thead
+				{
+					background-color: #302E2B;
+				}
+
+				thead tr
+				{
+					color: #E5E7E9;
+				}
+
+				.table tbody tr
+				{
+					margin-bottom: 10px;
+				}
+			</style>
+			<div id="popup" class="popup">
+				<div class="popup-content">
+					<span th:onclick="closePopup()" class="close">&times;</span>
+					<form th:action="@{/rooms/add}" method="post" enctype="multipart/form-data">
+						<label for="inputText">Tạo mật khẩu phòng (hoặc để rỗng):</label>
+						<input type="text" id="inputText" name="inputText" onchange="checkFileInput()">
+						</br>
+						<label for="fileInput">Chọn file:</label>
+						<input type="file" id="fileInput" name="fileInput" onchange="checkFileInput()">
+						</br>
+						<button type="submit" id="submitbutt">Xác nhận</button>
+					</form>
+				</div>
+			</div>
+			<div class="table-responsive">
+				<div class="table-container">
+					<table class="table">
+						<thead>
+							<tr>
+								<th>ID</th>
+								<th>Room name</th>
+								<th>Người tạo</th>
+								<th>Số lượng người chơi</th>
+								<th>Ngày tạo</th>
+								<th>Tùy chọn</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr th:each="list:${PlayerList}">
+								<td th:text="${list.Roomid.IdRoom}"></td>
+								<td th:text="${list.Roomid.TenPhong}"></td>
+								<td th:text="${list.Userid.Ten}"></td>
+								<td th:text="${list.SoLuong}"></td>
+								<td th:text="${list.NgayTao}"></td>
+								<td>
+									<a class="join" style="color: red"  th:if="${list.Roomid.RoomPassword == null or list.Roomid.RoomPassword == ''}" th:href="@{/play/start/{id} (id=${list.Roomid.IdRoom})}">Tham gia</a>
+									<a th:else></a>
+									<div class="join" style="color: red" th:if="${list.Roomid.RoomPassword != null and list.Roomid.RoomPassword != ''}" href="#" th:onclick="'JoinRoomOnClick(\'' + ${list.Roomid.IdRoom} + '\')'">Tham gia
+										<div th:id="'popupjoin-'+${list.Roomid.IdRoom}" class="popup">
+											<div class="popup-content">
+												<span type="submit" th:onclick="closePopupJoin()" class="close">&times;</span>
+												<form th:action="@{typePass/{id} (id=${list.Roomid.IdRoom})}" method="post" enctype="multipart/form-data">
+													<label for="inputText">Nhập mật khẩu:</label>
+													<input type="text" id="inputText" name="inputText" onchange="checkFileInput()">
+													</br>
+													<label for="fileInput">Chọn file:</label>
+													<input type="file" id="fileInput" name="fileInput" onchange="checkFileInput()">
+													</br>
+													<button type="submit" id="submitbutton">Tham gia</button>
+												</form>
+											</div>
+										</div>
+									</div>
+								</td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+			</div>
+		</div>
+		<th:block th:replace="~{layout::footer}"></th:block>
+	</body>
 </html>
 <script>
-  document.getElementById('popup').style.display = 'none';
- 
-  function closePopup() {
-    document.getElementById('popup').style.display = 'none';
-  }
-  document.getElementById("addnew").onclick = function(event) {
-    document.getElementById('popup').style.display = 'block';
-  };
-  
-  
-  function closePopupJoin() {
-    location.reload();
-  }
-  function JoinRoomOnClick(id) {
-    console.log(id);
-    var buttonId = 'popupjoin-' + id;
-    document.getElementById(buttonId).style.display = 'block';
-  };
+	document.getElementById('popup').style.display = 'none';
 
-  function checkFileInput() {
-    var fileInput = document.getElementById('fileInput');
-    var inputText = document.getElementById('inputText');
-    var submitButton = document.getElementById('submitbutt');
-    //var submitButtonJoin = document.getElementById('submitbutton');
+	function closePopup() {
+		document.getElementById('popup').style.display = 'none';
+	}
+	document.getElementById("addnew").onclick = function(event) {
+		document.getElementById('popup').style.display = 'block';
+	};
 
-    if (fileInput.files.length > 0 && inputText.value.trim() === '') {
-      alert('Vui lòng nhập mật khẩu phòng khi trước khi tạo phòng chơi tiếp tục ván cũ');
-        submitButton.disabled = true;
-        /*if(submitButtonJoin != null)
-        {
-          submitButtonJoin.disabled = true;
-        }*/
-        
-    } else {
-      /*if(submitButtonJoin != null)
-      {
-        submitButtonJoin.disabled = false;
-      }*/
-        submitButton.disabled = false;
-    }
-  }
+	function closePopupJoin() {
+		location.reload();
+	}
 
+	function JoinRoomOnClick(id) {
+		console.log(id);
+		var buttonId = 'popupjoin-' + id;
+		document.getElementById(buttonId).style.display = 'block';
+	};
+
+	function checkFileInput() {
+		var fileInput = document.getElementById('fileInput');
+		var inputText = document.getElementById('inputText');
+		var submitButton = document.getElementById('submitbutt');
+		//var submitButtonJoin = document.getElementById('submitbutton');
+		if (fileInput.files.length > 0 && inputText.value.trim() === '') {
+			alert('Vui lòng nhập mật khẩu phòng khi trước khi tạo phòng chơi tiếp tục ván cũ');
+			submitButton.disabled = true;
+			/*if(submitButtonJoin != null)
+			{
+			  submitButtonJoin.disabled = true;
+			}*/
+		} else {
+			/*if(submitButtonJoin != null)
+			{
+			  submitButtonJoin.disabled = false;
+			}*/
+			submitButton.disabled = false;
+		}
+	}
 </script>
