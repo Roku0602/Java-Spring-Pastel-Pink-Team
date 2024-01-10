@@ -79,10 +79,6 @@ public class HomeController {
     @GetMapping("/play/start/{id}")
     public String ChessBoard(HttpSession session,@PathVariable("id")  int id)
     {
-        if(session.getAttribute("playeronRoom") != null)
-        {
-            session.removeAttribute("playeronRoom");
-        }
         if(session.getAttribute("user") != null)
         {
             Room_detail countplayer = homeService.CheckCountNumPlayer(id);
@@ -94,9 +90,11 @@ public class HomeController {
                     {
                         //Người chơi đã ở ngay trong phòng, không cần tăng thêm
                     }
+                   
                 }
                 else
                 {
+                    
                     String nameOfMasterRoom = homeService.getRoomMaster(id);
                     if(session.getAttribute("user").toString().trim().equals(nameOfMasterRoom.trim().toString()))
                     {
@@ -123,6 +121,10 @@ public class HomeController {
             }
             else
             {
+                if(session.getAttribute("playeronRoom") != null )
+                {
+                    session.removeAttribute("playeronRoom");
+                }
                 return "redirect:/";
             }
             
