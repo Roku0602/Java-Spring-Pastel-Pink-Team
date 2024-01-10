@@ -1,0 +1,226 @@
+[
+  {
+    "id": "xedo1",
+    "src": "/xedo1.svg",
+    "top": 61,
+    "left": 106,
+    "visible": "block"
+  },
+  {
+    "id": "mado1",
+    "src": "/mado1.svg",
+    "top": 209,
+    "left": 254,
+    "visible": "block"
+  },
+  {
+    "id": "tuongdo1",
+    "src": "/tuongdo1.svg",
+    "top": 61,
+    "left": 254,
+    "visible": "block"
+  },
+  {
+    "id": "sido1",
+    "src": "/sido1.svg",
+    "top": 61,
+    "left": 328,
+    "visible": "block"
+  },
+  {
+    "id": "chudo",
+    "src": "/chutuongdo.svg",
+    "top": 61,
+    "left": 402,
+    "visible": "block"
+  },
+  {
+    "id": "sido2",
+    "src": "/sido1.svg",
+    "top": 61,
+    "left": 476,
+    "visible": "block"
+  },
+  {
+    "id": "tuongdo2",
+    "src": "/tuongdo1.svg",
+    "top": 61,
+    "left": 550,
+    "visible": "block"
+  },
+  {
+    "id": "mado2",
+    "src": "/mado1.svg",
+    "top": 61,
+    "left": 624,
+    "visible": "none"
+  },
+  {
+    "id": "xedo2",
+    "src": "/xedo2.svg",
+    "top": 61,
+    "left": 698,
+    "visible": "block"
+  },
+  {
+    "id": "phaodo1",
+    "src": "/phaodo1.svg",
+    "top": 209,
+    "left": 180,
+    "visible": "block"
+  },
+  {
+    "id": "phaodo2",
+    "src": "/phaodo2.svg",
+    "top": 209,
+    "left": 624,
+    "visible": "block"
+  },
+  {
+    "id": "totdo1",
+    "src": "/totdo1.svg",
+    "top": 283,
+    "left": 106,
+    "visible": "block"
+  },
+  {
+    "id": "totdo2",
+    "src": "/totdo2.svg",
+    "top": 283,
+    "left": 254,
+    "visible": "block"
+  },
+  {
+    "id": "totdo3",
+    "src": "/totdo3.svg",
+    "top": 283,
+    "left": 402,
+    "visible": "block"
+  },
+  {
+    "id": "totdo4",
+    "src": "/totdo4.svg",
+    "top": 283,
+    "left": 550,
+    "visible": "block"
+  },
+  {
+    "id": "totdo5",
+    "src": "/totdo5.svg",
+    "top": 283,
+    "left": 698,
+    "visible": "block"
+  },
+  {
+    "id": "totden1",
+    "src": "/totden1.svg",
+    "top": 505,
+    "left": 106,
+    "visible": "block"
+  },
+  {
+    "id": "totden2",
+    "src": "/totden2.svg",
+    "top": 505,
+    "left": 254,
+    "visible": "block"
+  },
+  {
+    "id": "totden3",
+    "src": "/totden3.svg",
+    "top": 505,
+    "left": 402,
+    "visible": "block"
+  },
+  {
+    "id": "totden4",
+    "src": "/totden4.svg",
+    "top": 505,
+    "left": 550,
+    "visible": "block"
+  },
+  {
+    "id": "totden5",
+    "src": "/totden5.svg",
+    "top": 505,
+    "left": 698,
+    "visible": "block"
+  },
+  {
+    "id": "phaoden1",
+    "src": "/phaoden1.svg",
+    "top": 579,
+    "left": 180,
+    "visible": "block"
+  },
+  {
+    "id": "phaoden2",
+    "src": "/phaoden2.svg",
+    "top": 61,
+    "left": 624,
+    "visible": "block"
+  },
+  {
+    "id": "xeden1",
+    "src": "/xeden1.svg",
+    "top": 727,
+    "left": 106,
+    "visible": "block"
+  },
+  {
+    "id": "xeden2",
+    "src": "/xeden2.svg",
+    "top": 727,
+    "left": 698,
+    "visible": "block"
+  },
+  {
+    "id": "maden1",
+    "src": "/maden1.svg",
+    "top": 727,
+    "left": 180,
+    "visible": "block"
+  },
+  {
+    "id": "maden2",
+    "src": "/maden2.svg",
+    "top": 727,
+    "left": 624,
+    "visible": "block"
+  },
+  {
+    "id": "tuongden1",
+    "src": "/tuongden1.svg",
+    "top": 727,
+    "left": 254,
+    "visible": "block"
+  },
+  {
+    "id": "tuongden2",
+    "src": "/tuongden2.svg",
+    "top": 727,
+    "left": 550,
+    "visible": "block"
+  },
+  {
+    "id": "siden1",
+    "src": "/siden1.svg",
+    "top": 727,
+    "left": 328,
+    "visible": "block"
+  },
+  {
+    "id": "siden2",
+    "src": "/siden2.svg",
+    "top": 727,
+    "left": 476,
+    "visible": "block"
+  },
+  {
+    "id": "chuden",
+    "src": "/chutuongden.svg",
+    "top": 727,
+    "left": 402,
+    "visible": "block"
+  }
+]

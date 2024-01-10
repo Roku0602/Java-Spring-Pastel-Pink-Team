@@ -79,6 +79,10 @@ public class HomeController {
     @GetMapping("/play/start/{id}")
     public String ChessBoard(HttpSession session,@PathVariable("id")  int id)
     {
+        if(session.getAttribute("playeronRoom") != null)
+        {
+            session.removeAttribute("playeronRoom");
+        }
         if(session.getAttribute("user") != null)
         {
             Room_detail countplayer = homeService.CheckCountNumPlayer(id);
